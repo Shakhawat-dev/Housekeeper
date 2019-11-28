@@ -27,13 +27,6 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
 
         spinner.setOnItemSelectedListener(this);
 
-        /*List<String> categories = new ArrayList<String>();
-        categories.add("Item 1");
-        categories.add("Item 2");
-        categories.add("Item 3");
-        categories.add("Item 4");
-        categories.add("Item 5");*/
-
         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

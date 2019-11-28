@@ -3,10 +3,12 @@ package com.example.housekeeper;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -36,28 +38,67 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     private EditText editTextUsername, editTextPassword;
+    private Button loginBtn;
+    private SharedPreferences loginPrefs;
+    private static final String LOGIN_KEY = "loginKey";
+
     private final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editTextUsername = (EditText) findViewById(R.id.et_username);
         editTextPassword = (EditText) findViewById(R.id.et_password);
+        loginBtn = (Button) findViewById(R.id.btnlogin);
+
+        SharedPreferences prefs;
+
+        prefs = getSharedPreferences(LOGIN_KEY, 0);
+
+        if (prefs.contains("Key")) {
+
+            Toast.makeText(MainActivity.this, "Signed In", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+            startActivity(intent);
+            finish();
+
+        } else {
+
+            Toast.makeText(MainActivity.this, "Not Signed In", Toast.LENGTH_LONG).show();
+
+        }
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String username = editTextUsername.getText().toString();
+                String password = editTextPassword.getText().toString();
+                if (validate(username, password)) {
+                    signIn(username, password);
+                } else {
+                    Toast.makeText(MainActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
     }
 
-    public void clickLogin(View view) {
-        String username = editTextUsername.getText().toString();
-        String password = editTextPassword.getText().toString();
-        if (validate(username, password)) {
-                signIn(username, password);
-        } else {
-            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    public void clickLogin(View view) {
+//        String username = editTextUsername.getText().toString();
+//        String password = editTextPassword.getText().toString();
+//        if (validate(username, password)) {
+//                signIn(username, password);
+//        } else {
+//            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     private void signIn(final String username, final String password) {
-        String URL="http://175.41.47.106/alamafour/api/login";
+        String URL = "http://175.41.47.106/alamafour/api/login";
         final String getCurrentLocale = Locale.getDefault().getLanguage();
 
         try {
@@ -75,8 +116,15 @@ public class MainActivity extends AppCompatActivity {
                         String access_token = jsonObject.getString("access_token");
                         String username = jsonObject.getString("username");
                         JSONArray roles = jsonObject.getJSONArray("roles");
-                        String role=roles.getString(0);
-                        if (access_token !="") {
+                        String role = roles.getString(0);
+
+                        if (access_token != "") {
+
+                            loginPrefs = getSharedPreferences(LOGIN_KEY, 0);
+                            SharedPreferences.Editor editor = loginPrefs.edit();
+                            editor.putString("Key", access_token);
+                            editor.commit();
+
                             Intent intent = new Intent(MainActivity.this, HotelListActivity.class);
                             startActivity(intent);
                             finish();
@@ -110,16 +158,17 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             };
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy( 5000000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(stringRequest);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
+
     private boolean validate(String emailStr, String password) {
         //Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
-       // return password.length() > 0  && emailStr.length();
+        // return password.length() > 0  && emailStr.length();
         return true;
     }
 }

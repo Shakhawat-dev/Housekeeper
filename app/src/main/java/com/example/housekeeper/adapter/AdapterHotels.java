@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.housekeeper.DashboardActivity;
 import com.example.housekeeper.R;
 import com.example.housekeeper.TaskListActivity;
 import com.example.housekeeper.model.ModelHotels;
@@ -74,7 +75,7 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
 
             ModelHotels hotelsList = modelHotelsList.get(position);
 
-            Intent intent = new Intent(ctx, TaskListActivity.class);
+            Intent intent = new Intent(ctx, DashboardActivity.class);
 
             intent.putExtra("Name", hotelsList.getName());
             intent.putExtra("Address", hotelsList.getAdsress());
