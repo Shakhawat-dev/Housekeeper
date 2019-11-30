@@ -6,14 +6,13 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.housekeeper.MainActivity;
+import com.example.housekeeper.activity.MainActivity;
 import com.example.housekeeper.R;
 import com.example.housekeeper.model.ModelMoreList;
 

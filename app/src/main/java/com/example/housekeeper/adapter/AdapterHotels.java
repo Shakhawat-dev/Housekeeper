@@ -10,9 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.housekeeper.DashboardActivity;
+import com.example.housekeeper.activity.DashboardActivity;
 import com.example.housekeeper.R;
-import com.example.housekeeper.TaskListActivity;
 import com.example.housekeeper.model.ModelHotels;
 
 import java.util.List;

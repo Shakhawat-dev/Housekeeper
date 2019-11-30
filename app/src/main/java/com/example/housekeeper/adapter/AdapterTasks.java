@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.housekeeper.R;
-import com.example.housekeeper.TaskDetailsActivity;
+import com.example.housekeeper.activity.TaskDetailsActivity;
 import com.example.housekeeper.model.ModelTasks;
 
 import java.util.List;
