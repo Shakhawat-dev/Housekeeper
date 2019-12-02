@@ -37,7 +37,8 @@
         <activity android:name=".activity.TaskListActivity" />
         <activity android:name=".activity.HotelListActivity" />
         <activity android:name=".activity.HomeActivity" />
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
     </application>

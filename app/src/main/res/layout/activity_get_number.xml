@@ -47,6 +47,7 @@
                 android:gravity="center"
                 app:ccp_arrowColor="@color/colorBlack"
                 app:ccp_contentColor="@color/colorBlack"
+                app:ccp_defaultPhoneCode="966"
                 app:ccp_showNameCode="false"
                 app:ccp_showFlag="false" />
 
@@ -72,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="32dp"
-            android:background="@drawable/edit_text_outline_white"
+            android:background="@drawable/btn_outline_white"
             android:text="Continue"
             android:textColor="@color/colorWhite" />
 

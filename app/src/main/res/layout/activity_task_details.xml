@@ -15,8 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:orientation="vertical">
             
@@ -67,8 +67,8 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:textSize="12sp"
-                            android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
                             android:background="@drawable/text_back_green"
                             android:textColor="@color/colorWhite"/>
 
@@ -154,8 +154,8 @@
                 android:background="@drawable/text_back_blue_rectangle"
                 android:textColor="@color/colorWhite"
                 android:layout_marginTop="4dp"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
                 android:text="Message : " />
 
             <EditText
@@ -176,8 +176,8 @@
                 android:background="@drawable/text_back_blue_rectangle"
                 android:textColor="@color/colorWhite"
                 android:layout_marginTop="4dp"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
                 android:text="Comment : " />
 
             <EditText

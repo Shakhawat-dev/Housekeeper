@@ -1,7 +1,10 @@
 package com.example.housekeeper.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.housekeeper.activity.DashboardActivity;
 import com.example.housekeeper.R;
 import com.example.housekeeper.model.ModelHotels;
+import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
 
 import java.util.List;
 
@@ -44,7 +48,8 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
         ModelHotels hotels = modelHotelsList.get(position);
 
         holder.name.setText(hotels.getName());
-        holder.address.setText(hotels.getAdsress());
+        holder.address.setText(hotels.getAddress());
+        holder.hotelId.setText(hotels.getHotelId());
 
     }
 
@@ -57,6 +62,7 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
 
         public TextView name;
         public TextView address;
+        public TextView hotelId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +71,7 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
 
             name = (TextView) itemView.findViewById(R.id.hotel_name_tv);
             address = (TextView) itemView.findViewById(R.id.hotel_address_tv);
+            hotelId = (TextView) itemView.findViewById(R.id.hotel_id_tv);
         }
 
         @Override
@@ -77,9 +84,20 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
             Intent intent = new Intent(ctx, DashboardActivity.class);
 
             intent.putExtra("Name", hotelsList.getName());
-            intent.putExtra("Address", hotelsList.getAdsress());
+            intent.putExtra("Address", hotelsList.getAddress());
+            intent.putExtra("Hotel ID", hotelsList.getAddress());
+
+            ModelHotels modelHotels = new ModelHotels(
+                    hotelsList.getName(),
+                    hotelsList.getAddress(),
+                    hotelsList.getHotelId()
+            );
+
+            // Writting into Sharedpreference
+            SharedPrefManager.getInstance(ctx).hotelDetails(modelHotels);
 
             ctx.startActivity(intent);
+            ((Activity)ctx).finish();
 
 
         }

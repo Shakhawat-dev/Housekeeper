@@ -1,5 +1,6 @@
 package com.example.housekeeper.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -84,6 +85,7 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
             Intent intent = new Intent(ctx, TaskDetailsActivity.class);
 
             ctx.startActivity(intent);
+            ((Activity)ctx).finish();
 
 
         }

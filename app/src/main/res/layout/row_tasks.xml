@@ -12,15 +12,16 @@
 
         <ImageView
             android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_launcher_background" />
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/living_room" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="4dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:orientation="vertical">
 
@@ -40,7 +41,7 @@
                     android:layout_weight="1"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorBlack"/>
+                    android:textColor="@color/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/status_tv"
@@ -50,8 +51,8 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textSize="12sp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
                     android:background="@drawable/text_back_green"
                     android:textColor="@color/colorWhite"/>
 

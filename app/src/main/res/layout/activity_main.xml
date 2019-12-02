@@ -5,18 +5,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="300px"
+    android:background="@color/colorPrimary"
     tools:context=".activity.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
+            android:text="Alama360"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="92dp"
+            android:background="@drawable/edit_text_back_white_round"
+            android:padding="12dp"
             android:ems="10"
             android:hint="User name"
             android:inputType="textPersonName" />
@@ -25,15 +42,21 @@
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:ems="10"
             android:hint="Password"
+            android:background="@drawable/edit_text_back_white_round"
+            android:padding="12dp"
             android:inputType="textPassword" />
 
         <Button
             android:id="@+id/btnlogin"
-            android:layout_width="match_parent"
+            android:layout_width="128dp"
             android:layout_height="wrap_content"
-            android:onClick="clickLogin"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_outline_white"
+            android:layout_marginTop="32dp"
+            android:textColor="@color/colorWhite"
             android:text="Login" />
     </LinearLayout>
 </RelativeLayout>

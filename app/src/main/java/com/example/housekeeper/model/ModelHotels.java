@@ -2,40 +2,40 @@ package com.example.housekeeper.model;
 
 public class ModelHotels {
 
-    private String name;
-    private String image;
-    private String adsress;
+    private String hotelCaption;
+    private String hotelId;
+    private String address;
 
     public ModelHotels() {
     }
 
-    public ModelHotels(String name, String image, String adsress) {
-        this.name = name;
-        this.image = image;
-        this.adsress = adsress;
+    public ModelHotels(String name, String address, String hotelId) {
+        this.hotelCaption = name;
+        this.hotelId = hotelId;
+        this.address = address;
     }
 
     public String getName() {
-        return name;
+        return hotelCaption;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.hotelCaption = name;
     }
 
-    public String getImage() {
-        return image;
+    public String getHotelId() {
+        return hotelId;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setHotelId(String hotelId) {
+        this.hotelId = hotelId;
     }
 
-    public String getAdsress() {
-        return adsress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdsress(String adsress) {
-        this.adsress = adsress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

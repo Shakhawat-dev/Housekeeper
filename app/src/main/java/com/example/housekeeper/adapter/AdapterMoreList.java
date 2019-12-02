@@ -1,6 +1,8 @@
 package com.example.housekeeper.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -10,11 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.housekeeper.activity.GetNumberActivity;
 import com.example.housekeeper.activity.MainActivity;
 import com.example.housekeeper.R;
 import com.example.housekeeper.model.ModelMoreList;
+import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
 
 import java.util.List;
 
@@ -76,17 +81,33 @@ public class AdapterMoreList extends RecyclerView.Adapter<AdapterMoreList.ViewHo
 
             if (moreList.getName().equals("Sign Out")) {
 
-                SharedPreferences pref;
-                pref = ctx.getSharedPreferences(LOGIN_KEY, 0);
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                //Yes button clicked
+                                SharedPrefManager.getInstance(ctx).logout();
 
-                SharedPreferences.Editor editor = pref.edit();
-                editor.remove("Key");
-                editor.commit();
+                                Intent intent = new Intent(ctx, GetNumberActivity.class);
+                                ctx.startActivity(intent);
+                                ((Activity)ctx).finish();
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
 
                 Toast.makeText(v.getContext(), "Sign Out Tapped", Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(ctx, MainActivity.class);
-                ctx.startActivity(intent);
+
 
             }
 

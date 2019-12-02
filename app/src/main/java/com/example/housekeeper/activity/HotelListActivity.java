@@ -18,7 +18,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.housekeeper.R;
 import com.example.housekeeper.adapter.AdapterHotels;
+import com.example.housekeeper.api.URLs;
+import com.example.housekeeper.api.VolleySingleton;
 import com.example.housekeeper.model.ModelHotels;
+import com.example.housekeeper.model.ModelLogin;
+import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +40,7 @@ public class HotelListActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private List<ModelHotels> hotelsList;
 
-    private static final String URL = "http://175.41.47.106/alamaone/fofTaskAssignmentApi/auth";
+    private String mPhoneNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,15 @@ public class HotelListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        getHotels(URL);
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+
+            mPhoneNo = extras.getString("phone no");
+
+        }
+
+        getHotels();
 
         hotelsList = new ArrayList<>();
 
@@ -65,11 +77,11 @@ public class HotelListActivity extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
     }
 
-    private void getHotels(String url) {
+    private void getHotels() {
 
         final String getCurrentLocale = Locale.getDefault().getLanguage();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_AUTH,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -77,26 +89,54 @@ public class HotelListActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("abc", response.toString());
-
-                            //Todo: I'll use this method later...
-                            JSONArray hotellistObj=jsonObject.getJSONArray("hotelList");
-                            for (int i = 0; i < hotellistObj.length(); i++) {
-                                JSONObject object = hotellistObj.getJSONObject(i);
-
-                                String hotelId = object.getString("hotelId").trim();
-                                String hotelCaption = object.getString("hotelCaption").trim();
-                                Log.d("hotelCaption", hotelCaption);
-
-                                ModelHotels modelHotels = new ModelHotels(hotelId, " ", hotelCaption);
-                                hotelsList.add(modelHotels);
-                            }
-
-                            adapter = new AdapterHotels(HotelListActivity.this, hotelsList);
-                            recyclerView.setAdapter(adapter);
+                            // Getting the object values
+//                            String accessToken = jsonObject.getString("accessToken");
+//                            String verificationCode = jsonObject.getString("verificationCode");
+//                            int organizationId = jsonObject.getInt("organizationId");
+//                            int userId = jsonObject.getInt("userId");
+//                            String organizationCaption = jsonObject.getString("organizationCaption");
 
                             Boolean isError = jsonObject.getBoolean("isError");
 
+                            if (isError.equals(false)) {
+
+                                ModelLogin modelLogin = new ModelLogin(
+
+                                        jsonObject.getString("accessToken"),
+                                        jsonObject.getString("verificationCode"),
+                                        jsonObject.getInt("organizationId"),
+                                        jsonObject.getInt("userId"),
+                                        jsonObject.getString("organizationCaption"),
+                                        jsonObject.getBoolean("isError")
+
+                                );
+
+                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(modelLogin);
+
+
+                            }
+
+                            Log.d("abc", response.toString());
+
+                            //Todo: I'll use this method later...
+                            JSONArray hotellistObj = jsonObject.getJSONArray("hotelList");
+
+                            for (int i = 0; i < hotellistObj.length(); i++) {
+                                JSONObject object = hotellistObj.getJSONObject(i);
+
+                                String hoteName = object.getString("hotelCaption").trim();
+                                String hotelAddress = object.getString("address").trim();
+                                String hotelId = object.getString("hotelId").trim();
+
+                                Log.d("hotelCaption", hoteName);
+
+                                ModelHotels modelHotels = new ModelHotels(hoteName, hotelAddress, hotelId);
+                                hotelsList.add(modelHotels);
+                            }
+
+
+                            adapter = new AdapterHotels(HotelListActivity.this, hotelsList);
+                            recyclerView.setAdapter(adapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -116,13 +156,15 @@ public class HotelListActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("phoneNumber", "966920006413");
+                params.put("phoneNumber", mPhoneNo);
+                params.put("language", "en");
                 return params;
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(HotelListActivity.this);
-        requestQueue.add(stringRequest);
+//        RequestQueue requestQueue = Volley.newRequestQueue(HotelListActivity.this);
+//        requestQueue.add(stringRequest);
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
 }

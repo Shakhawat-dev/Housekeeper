@@ -3,6 +3,7 @@ package com.example.housekeeper.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.housekeeper.R;
+import com.example.housekeeper.api.URLs;
+import com.example.housekeeper.api.VolleySingleton;
+import com.example.housekeeper.model.ModelPhoneLanguage;
+import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
 import com.hbb20.CountryCodePicker;
 
 import org.json.JSONArray;
@@ -28,6 +33,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.SocketHandler;
 
 
 public class GetNumberActivity extends AppCompatActivity {
@@ -37,9 +43,13 @@ public class GetNumberActivity extends AppCompatActivity {
     private EditText edPhone;
     private Button mContinueBtn;
 
-    private RequestQueue queue;
+    private String fullPhoneNo;
+    private String language;
 
-    private static final String URL = "http://175.41.47.106/alamaone/fofTaskAssignmentApi/auth";
+    private SharedPreferences loginPrefs;
+    private static final String LOGIN_KEY = "loginKey";
+
+    private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +61,41 @@ public class GetNumberActivity extends AppCompatActivity {
         mContinueBtn = (Button) findViewById(R.id.btn_continue);
         mTitle = (TextView) findViewById(R.id.textTitle);
 
-        queue = Volley.newRequestQueue(this);
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(this, DashboardActivity.class));
+            return;
+        }
+
+
+
+
+//        SharedPreferences prefs;
+//
+//        prefs = getSharedPreferences(LOGIN_KEY, 0);
+//
+//        if (prefs.contains("Key")) {
+//
+//            Toast.makeText(GetNumberActivity.this, "Signed In", Toast.LENGTH_LONG).show();
+//            Intent intent = new Intent(GetNumberActivity.this, DashboardActivity.class);
+//            startActivity(intent);
+//            finish();
+//
+//        } else {
+//
+//            Toast.makeText(GetNumberActivity.this, "Not Signed In", Toast.LENGTH_LONG).show();
+//
+//        }
 
         mContinueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String countryCode = ccp.getSelectedCountryCode().trim();
-                String phoneNo = edPhone.getText().toString().trim();
 
-                String fullPhoneNo = countryCode + phoneNo;
+
                 Log.d("abc 1", "Akhane asece");
-                continueSignIn(URL);
+                continueSignIn();
+
 //                mTitle.setText(fullPhoneNo);
 
             }
@@ -70,12 +103,12 @@ public class GetNumberActivity extends AppCompatActivity {
 
     }
 
-    private void continueSignIn(final String url) {
+    private void continueSignIn() {
 
 
         final String getCurrentLocale = Locale.getDefault().getLanguage();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_AUTH,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -88,7 +121,7 @@ public class GetNumberActivity extends AppCompatActivity {
                             String accessToken = jsonObject.getString("accessToken");
                             String verificationCode = jsonObject.getString("verificationCode");
 
-                            //Todo: I'll use this method later...
+                            // TODO: I'll use this method later...
 //                            JSONArray hotellistObj=jsonObject.getJSONArray("hotelList");
 //                            for (int i = 0; i < hotellistObj.length(); i++) {
 //                                JSONObject object = hotellistObj.getJSONObject(i);
@@ -98,6 +131,9 @@ public class GetNumberActivity extends AppCompatActivity {
 //                                Log.d("hotelCaption", hotelCaption);
 //                            }
 
+                            int organizationId = jsonObject.getInt("organizationId");
+                            int userId = jsonObject.getInt("userId");
+                            String organizationCaption = jsonObject.getString("organizationCaption");
                             Boolean isError = jsonObject.getBoolean("isError");
 
                             if (isError.equals(false)) {
@@ -106,6 +142,18 @@ public class GetNumberActivity extends AppCompatActivity {
 
                                 intent.putExtra("Verification Code", verificationCode);
                                 intent.putExtra("Access Token", accessToken);
+                                intent.putExtra("Mobile NO", fullPhoneNo);
+                                intent.putExtra("Organization ID", organizationId);
+                                intent.putExtra("User ID", userId);
+                                intent.putExtra("Organization Caption", organizationCaption);
+                                intent.putExtra("Is Error", isError);
+
+                                // Putting phone and language into sharedpreferense
+                                ModelPhoneLanguage modelPhoneLanguage = new ModelPhoneLanguage(fullPhoneNo, language);
+                                SharedPrefManager.getInstance(getApplicationContext()).phoneAndLanguage(modelPhoneLanguage);
+
+
+//                                Log.d("For Phone NO CHeck: ", fullPhoneNo);
 
                                 startActivity(intent);
                                 finish();
@@ -129,15 +177,26 @@ public class GetNumberActivity extends AppCompatActivity {
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+
+                String countryCode = ccp.getSelectedCountryCode().trim();
+                String phoneNo = edPhone.getText().toString().trim();
+
+                fullPhoneNo = countryCode + phoneNo;
+                language = "en";
+
+
                 Map<String, String> params = new HashMap<>();
-                params.put("phoneNumber", "966920006413");
+                params.put("phoneNumber", fullPhoneNo);
+                params.put("language", language);
                 return params;
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(GetNumberActivity.this);
-        requestQueue.add(stringRequest);
+//        RequestQueue requestQueue = Volley.newRequestQueue(GetNumberActivity.this);
+//        requestQueue.add(stringRequest);
 
+        // Singleton class call for queue
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
 }
