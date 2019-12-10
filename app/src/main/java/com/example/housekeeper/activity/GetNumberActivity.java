@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.housekeeper.R;
 import com.example.housekeeper.api.URLs;
 import com.example.housekeeper.api.VolleySingleton;
+import com.example.housekeeper.custom.MultiLanguage;
 import com.example.housekeeper.model.ModelPhoneLanguage;
 import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
 import com.hbb20.CountryCodePicker;
@@ -61,30 +63,10 @@ public class GetNumberActivity extends AppCompatActivity {
         mContinueBtn = (Button) findViewById(R.id.btn_continue);
         mTitle = (TextView) findViewById(R.id.textTitle);
 
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            finish();
-            startActivity(new Intent(this, DashboardActivity.class));
-            return;
-        }
-
-
-
-
-//        SharedPreferences prefs;
-//
-//        prefs = getSharedPreferences(LOGIN_KEY, 0);
-//
-//        if (prefs.contains("Key")) {
-//
-//            Toast.makeText(GetNumberActivity.this, "Signed In", Toast.LENGTH_LONG).show();
-//            Intent intent = new Intent(GetNumberActivity.this, DashboardActivity.class);
-//            startActivity(intent);
+//        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
 //            finish();
-//
-//        } else {
-//
-//            Toast.makeText(GetNumberActivity.this, "Not Signed In", Toast.LENGTH_LONG).show();
-//
+//            startActivity(new Intent(this, DashboardActivity.class));
+//            return;
 //        }
 
         mContinueBtn.setOnClickListener(new View.OnClickListener() {
@@ -192,11 +174,43 @@ public class GetNumberActivity extends AppCompatActivity {
             }
         };
 
-//        RequestQueue requestQueue = Volley.newRequestQueue(GetNumberActivity.this);
-//        requestQueue.add(stringRequest);
-
         // Singleton class call for queue
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+
+        //noinspection SimplifiableIfStatement
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else if (id == R.id.action_english) {
+
+            new SharedPrefManager(this).phoneAndLanguage().s;
+            new DataPreference(this).isEnglish(true);
+            MultiLanguage.setApplicationlanguage(this, "en");
+
+            new AppManager(this).SetIntent(LoginActivityNew.class);
+            finish();
+            return true;
+        } else if (id == R.id.action_arabic) {
+            new DataPreference(this).setLanguage("ar");
+            new DataPreference(this).isEnglish(false);
+            MultiLanguage.setApplicationlanguage(this, "ar");
+
+            new AppManager(this).SetIntent(LoginActivityNew.class);
+            finish();
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 }

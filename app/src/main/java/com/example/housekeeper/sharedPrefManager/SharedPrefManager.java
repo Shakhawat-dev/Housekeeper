@@ -100,30 +100,49 @@ public class SharedPrefManager {
     }
 
     //This method will store phone number
-    public void phoneAndLanguage(ModelPhoneLanguage modelPhoneLanguage) {
+//    public String getLanguage() {
+//                SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+////        return new
+//
+//                sharedPreferences.getString(KEY_PHONE, null ),
+//                sharedPreferences.getString(KEY_LANGUAGE, null)
+//
+//        ););
+//    }
 
+    public void setLanguage(String language) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString(KEY_PHONE, modelPhoneLanguage.getPhone());
-        editor.putString(KEY_LANGUAGE, modelPhoneLanguage.getLanguage());
-
+        editor.putString(KEY_LANGUAGE, language);
         editor.apply();
 
     }
 
+//    public void phoneAndLanguage(ModelPhoneLanguage modelPhoneLanguage) {
+//
+//        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//
+//        editor.putString(KEY_PHONE, modelPhoneLanguage.getPhone());
+//        editor.putString(KEY_LANGUAGE, modelPhoneLanguage.getLanguage());
+//
+//        editor.apply();
+//
+//    }
+
     //This method for getthin phone and languages
-    public ModelPhoneLanguage getPhoneAndLanguage() {
-
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return new ModelPhoneLanguage(
-
-                sharedPreferences.getString(KEY_PHONE, null ),
-                sharedPreferences.getString(KEY_LANGUAGE, null)
-
-        );
-
-    }
+//    public ModelPhoneLanguage getPhoneAndLanguage() {
+//
+//        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//        return new ModelPhoneLanguage(
+//
+//                sharedPreferences.getString(KEY_PHONE, null ),
+//                sharedPreferences.getString(KEY_LANGUAGE, null)
+//
+//        );
+//
+//    }
 
 
     //this method will checker whether user is already logged in or not

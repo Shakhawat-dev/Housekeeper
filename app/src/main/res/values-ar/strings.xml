@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Housekeeper</string>
+    <string name="spinner_title">Item 1</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_home">Tasks</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_more">More</string>
+
+    <string name="tasks">ترجمه</string>
+    <string name="language_english">English</string>
+    <string name="language_arabic">عربى</string>
+</resources>
