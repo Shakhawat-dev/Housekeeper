@@ -132,7 +132,7 @@ public class GetNumberActivity extends AppCompatActivity {
 
                                 // Putting phone and language into sharedpreferense
                                 ModelPhoneLanguage modelPhoneLanguage = new ModelPhoneLanguage(fullPhoneNo, language);
-                                SharedPrefManager.getInstance(getApplicationContext()).phoneAndLanguage(modelPhoneLanguage);
+//                                SharedPrefManager.getInstance(getApplicationContext()).phoneAndLanguage(modelPhoneLanguage);
 
 
 //                                Log.d("For Phone NO CHeck: ", fullPhoneNo);
@@ -179,38 +179,38 @@ public class GetNumberActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        //noinspection SimplifiableIfStatement
-        if (id == android.R.id.home) {
-            onBackPressed();
-            return true;
-        } else if (id == R.id.action_english) {
-
-            new SharedPrefManager(this).phoneAndLanguage().s;
-            new DataPreference(this).isEnglish(true);
-            MultiLanguage.setApplicationlanguage(this, "en");
-
-            new AppManager(this).SetIntent(LoginActivityNew.class);
-            finish();
-            return true;
-        } else if (id == R.id.action_arabic) {
-            new DataPreference(this).setLanguage("ar");
-            new DataPreference(this).isEnglish(false);
-            MultiLanguage.setApplicationlanguage(this, "ar");
-
-            new AppManager(this).SetIntent(LoginActivityNew.class);
-            finish();
-            return true;
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == android.R.id.home) {
+//            onBackPressed();
+//            return true;
+//        } else if (id == R.id.action_english) {
+//
+//            new SharedPrefManager(this).phoneAndLanguage().s;
+//            new DataPreference(this).isEnglish(true);
+//            MultiLanguage.setApplicationlanguage(this, "en");
+//
+//            new AppManager(this).SetIntent(LoginActivityNew.class);
+//            finish();
+//            return true;
+//        } else if (id == R.id.action_arabic) {
+//            new DataPreference(this).setLanguage("ar");
+//            new DataPreference(this).isEnglish(false);
+//            MultiLanguage.setApplicationlanguage(this, "ar");
+//
+//            new AppManager(this).SetIntent(LoginActivityNew.class);
+//            finish();
+//            return true;
+//        }
+//
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 }

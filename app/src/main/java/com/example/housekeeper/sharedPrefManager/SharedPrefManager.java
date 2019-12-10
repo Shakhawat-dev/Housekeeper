@@ -102,12 +102,12 @@ public class SharedPrefManager {
     //This method will store phone number
 //    public String getLanguage() {
 //                SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-////        return new
+//        return new
 //
 //                sharedPreferences.getString(KEY_PHONE, null ),
 //                sharedPreferences.getString(KEY_LANGUAGE, null)
 //
-//        ););
+//        );
 //    }
 
     public void setLanguage(String language) {
