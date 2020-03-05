@@ -11,8 +11,8 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="70dp"
+            android:layout_width="@dimen/task_item_icon_size"
+            android:layout_height="@dimen/task_item_icon_size"
             android:layout_gravity="center"
             android:src="@drawable/living_room" />
 
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:text="Task Title"
                     android:layout_weight="1"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/medium_size"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"/>
 
@@ -50,9 +50,10 @@
                     android:text="Completed"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="12sp"
+                    android:padding="@dimen/padding_margin_5dp"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
+                    android:textSize="@dimen/micro_size"
                     android:background="@drawable/text_back_green"
                     android:textColor="@color/colorWhite"/>
 
@@ -68,14 +69,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Room No: "
-                    android:textSize="26sp"
+                    android:textSize="@dimen/medium_size"
                     android:textColor="@color/colorBlack"/>
 
                 <TextView
                     android:id="@+id/room_no_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="26sp"
+                    android:textSize="@dimen/medium_size"
                     android:text=" 224A "
                     android:textColor="@color/colorBlack"/>
 

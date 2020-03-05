@@ -4,4 +4,28 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="dm_10dp">10dp</dimen>
     <dimen name="dm_30dp">30dp</dimen>
+
+
+    <!-- Menu * item Icon Size-->
+    <dimen name="more_menu_size">40dp</dimen>
+    <dimen name="task_item_icon_size">70dp</dimen>
+    <dimen name="home_menu_icon_size">60dp</dimen>
+
+
+    <!-- Margin & padding -->
+    <dimen name="padding_margin_5dp">5dp</dimen>
+    <dimen name="padding_margin_10dp">10dp</dimen>
+    <dimen name="padding_margin_15dp">15dp</dimen>
+    <dimen name="padding_margin_20dp">20dp</dimen>
+
+
+    <!-- Text Size -->
+    <dimen name="micro_size">12sp</dimen>
+    <dimen name="small_size">15sp</dimen>
+    <dimen name="medium_size">18sp</dimen>
+    <dimen name="large_size">20sp</dimen>
+
+    <!-- Loading Image Size-->
+    <dimen name="loading_image_size">30dp</dimen>
+
 </resources>

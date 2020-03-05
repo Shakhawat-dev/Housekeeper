@@ -62,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_back_white"
                 android:hint="Ex: 011 XXX XXXX"
+                android:text="88012345678"
                 android:inputType="phone"
                 android:padding="12dp" />
 

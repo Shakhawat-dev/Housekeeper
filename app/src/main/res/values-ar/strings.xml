@@ -11,4 +11,13 @@
     <string name="tasks">ترجمه</string>
     <string name="language_english">English</string>
     <string name="language_arabic">عربى</string>
+
+
+    <!-- Close Application & sign out  Dialog -->
+    <string name="close_application">اغلق التطبيق</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="sign_out_message">هل أنت متأكد من تسجيل خروجك ؟</string>
+    <string name="exit_from_application">هل تريد اغلاق التطبيق ؟ </string>
+
 </resources>

@@ -7,18 +7,25 @@ public class ModelLogin {
     private int organizationId;
     private int userId;
     private String organizationCaption;
+    private String phoneNo;
     private boolean isError;
 
     public ModelLogin() {
     }
 
-    public ModelLogin(String accessToken, String verificationCode, int organizationId, int userId, String organizationCaption, boolean isError) {
+
+    public ModelLogin(String accessToken, String verificationCode, int organizationId, int userId, String organizationCaption, String phoneNo, boolean isError) {
         this.accessToken = accessToken;
         this.verificationCode = verificationCode;
         this.organizationId = organizationId;
         this.userId = userId;
         this.organizationCaption = organizationCaption;
+        this.phoneNo = phoneNo;
         this.isError = isError;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
     }
 
     public String getAccessToken() {

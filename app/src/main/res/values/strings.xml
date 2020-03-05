@@ -6,7 +6,15 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_more">More</string>
-    <string name="tasks">ترجمه</string>
+    <string name="tasks">Task</string>
     <string name="language_english">English</string>
     <string name="language_arabic">عربى</string>
+
+    <!-- Close Application & sign out  Dialog -->
+    <string name="close_application">Close Application</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="sign_out_message">Are you sure you want to Sign Out?</string>
+    <string name="exit_from_application">Do you want to close this application?</string>
+
 </resources>

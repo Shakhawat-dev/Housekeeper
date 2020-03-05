@@ -24,6 +24,8 @@ import com.example.housekeeper.api.URLs;
 import com.example.housekeeper.api.VolleySingleton;
 import com.example.housekeeper.model.ModelTasks;
 import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
+import com.example.housekeeper.utils.CustomDate;
+import com.example.housekeeper.utils.Data;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +52,7 @@ public class TasksFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_tasks, container, false);
 
-        recyclerView = (RecyclerView) root.findViewById(R.id.task_recyclerview);
+        recyclerView = root.findViewById(R.id.task_recyclerview);
         recyclerView.setHasFixedSize(true);
 
         linearLayoutManager = new LinearLayoutManager(getContext());
@@ -61,10 +63,10 @@ public class TasksFragment extends Fragment {
         mHotelId = SharedPrefManager.getInstance(root.getContext()).getHotel().getHotelId();
 
         //for test
-        mCurrentDate = "01-11-2019";
+        //  mCurrentDate = "01-11-2019";
 
         Log.d("Access token fragment: ", mAccessToken);
-        Log.d("Hotel fragment: ", mLanguage);
+//        Log.d("Hotel fragment: ", mLanguage);
 
         // Getting Task List from Api
         loadTasks();
@@ -72,7 +74,7 @@ public class TasksFragment extends Fragment {
         tasksList = new ArrayList<>();
 
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new AdapterTasks(getContext(),tasksList);
+        adapter = new AdapterTasks(getContext(), tasksList);
 
         recyclerView.setAdapter(adapter);
 
@@ -84,6 +86,7 @@ public class TasksFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_TASKS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.d(Data.TAG, "RESPONSE:" + response);
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -108,7 +111,6 @@ public class TasksFragment extends Fragment {
 //
 //                    }
 
-                    Log.d("Task response", response.toString());
 
                     //Todo: I'll use this method later...
                     JSONArray tasklistObj = jsonObject.getJSONArray("taskList");
@@ -154,8 +156,9 @@ public class TasksFragment extends Fragment {
                 params.put("phoneNumber", mPhoneNo);
                 params.put("language", mLanguage);
                 params.put("authToken", mAccessToken);
-                params.put("currentDate", mCurrentDate);
+                params.put("currentDate", CustomDate.getCurrentDate());
                 params.put("hotelId", mHotelId);
+                Log.i(Data.TAG, params.toString());
                 return params;
             }
 

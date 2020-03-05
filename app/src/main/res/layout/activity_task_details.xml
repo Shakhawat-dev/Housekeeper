@@ -89,17 +89,17 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Room No: "
-                                android:textSize="26sp"
-                                android:textColor="@color/colorBlack"/>
+                                android:text="Room : "
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="26sp" />
 
                             <TextView
                                 android:id="@+id/room_no_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="26sp"
                                 android:text=" 224A "
-                                android:textColor="@color/colorBlack"/>
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="26sp" />
 
                         </LinearLayout>
 

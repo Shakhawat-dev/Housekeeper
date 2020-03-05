@@ -3,18 +3,17 @@ package com.example.housekeeper.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.housekeeper.activity.DashboardActivity;
 import com.example.housekeeper.R;
+import com.example.housekeeper.activity.DashboardActivity;
 import com.example.housekeeper.model.ModelHotels;
 import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
 
@@ -25,7 +24,7 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
     private Context ctx;
     private List<ModelHotels> modelHotelsList;
 
-    public AdapterHotels (Context context, List hotelList) {
+    public AdapterHotels(Context context, List hotelList) {
 
         this.ctx = context;
         this.modelHotelsList = hotelList;
@@ -48,7 +47,13 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
         ModelHotels hotels = modelHotelsList.get(position);
 
         holder.name.setText(hotels.getName());
-        holder.address.setText(hotels.getAddress());
+        if (!hotels.getAddress().equals("null")) {
+            holder.layoutAddress.setVisibility(View.VISIBLE);
+            holder.address.setText(hotels.getAddress());
+        } else {
+            holder.layoutAddress.setVisibility(View.GONE);
+        }
+
         holder.hotelId.setText(hotels.getHotelId());
 
     }
@@ -63,15 +68,17 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
         public TextView name;
         public TextView address;
         public TextView hotelId;
+        public LinearLayout layoutAddress;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             itemView.setOnClickListener(this);
 
-            name = (TextView) itemView.findViewById(R.id.hotel_name_tv);
-            address = (TextView) itemView.findViewById(R.id.hotel_address_tv);
-            hotelId = (TextView) itemView.findViewById(R.id.hotel_id_tv);
+            name = itemView.findViewById(R.id.hotel_name_tv);
+            address = itemView.findViewById(R.id.hotel_address_tv);
+            layoutAddress = itemView.findViewById(R.id.layoutAddress);
+            hotelId = itemView.findViewById(R.id.hotel_id_tv);
         }
 
         @Override
@@ -97,7 +104,7 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
             SharedPrefManager.getInstance(ctx).hotelDetails(modelHotels);
 
             ctx.startActivity(intent);
-            ((Activity)ctx).finish();
+            ((Activity) ctx).finish();
 
 
         }

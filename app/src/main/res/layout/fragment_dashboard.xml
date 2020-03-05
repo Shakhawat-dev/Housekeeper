@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:tag="@string/title_dashboard"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:orientation="vertical">
@@ -20,6 +22,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -36,8 +39,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="@dimen/home_menu_icon_size"
+                            android:layout_height="@dimen/home_menu_icon_size"
                             android:layout_gravity="center"
                             android:src="@drawable/living_room"/>
 
@@ -45,6 +48,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Rooms"
+                            android:layout_marginTop="@dimen/padding_margin_10dp"
                             android:gravity="center"
                             android:textColor="@color/colorBlack"
                             android:textSize="18sp" />
@@ -67,13 +71,14 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="@dimen/home_menu_icon_size"
+                            android:layout_height="@dimen/home_menu_icon_size"
                             android:layout_gravity="center"
                             android:src="@drawable/telephone"/>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:layout_marginTop="@dimen/padding_margin_10dp"
                             android:layout_height="wrap_content"
                             android:text="Tasks"
                             android:gravity="center"
@@ -106,14 +111,15 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="@dimen/home_menu_icon_size"
+                            android:layout_height="@dimen/home_menu_icon_size"
                             android:layout_gravity="center"
                             android:src="@drawable/hotels"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/padding_margin_10dp"
                             android:text="Hotels"
                             android:gravity="center"
                             android:textColor="@color/colorBlack"
@@ -136,12 +142,13 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="@dimen/home_menu_icon_size"
+                            android:layout_height="@dimen/home_menu_icon_size"
                             android:layout_gravity="center"
                             android:src="@drawable/notifications"/>
 
                         <TextView
+                            android:layout_marginTop="@dimen/padding_margin_10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Notifications"
@@ -175,14 +182,15 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="@dimen/home_menu_icon_size"
+                            android:layout_height="@dimen/home_menu_icon_size"
                             android:layout_gravity="center"
                             android:src="@drawable/notifications"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/padding_margin_10dp"
                             android:text="Notifications"
                             android:gravity="center"
                             android:textColor="@color/colorBlack"
@@ -205,8 +213,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="@dimen/home_menu_icon_size"
+                            android:layout_height="@dimen/home_menu_icon_size"
                             android:layout_gravity="center"
                             android:src="@drawable/reception"/>
 
@@ -215,6 +223,7 @@
                             android:layout_height="wrap_content"
                             android:text="Informations"
                             android:gravity="center"
+                            android:layout_marginTop="@dimen/padding_margin_10dp"
                             android:textColor="@color/colorBlack"
                             android:textSize="18sp" />
 

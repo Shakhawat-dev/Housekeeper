@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.example.housekeeper.activity.GetNumberActivity;
-import com.example.housekeeper.activity.MainActivity;
 import com.example.housekeeper.model.ModelHotels;
 import com.example.housekeeper.model.ModelLogin;
 import com.example.housekeeper.model.ModelPhoneLanguage;
@@ -52,6 +51,7 @@ public class SharedPrefManager {
         editor.putInt(KEY_ORGANIZATIONID, modelLogin.getOrganizationId());
         editor.putInt(KEY_USERID, modelLogin.getUserId());
         editor.putString(KEY_ORGANIZATIONCAPTION, modelLogin.getOrganizationCaption());
+        editor.putString(KEY_PHONE, modelLogin.getPhoneNo());
         editor.putBoolean(KEY_ISERROR, modelLogin.isError());
 
         editor.apply();
@@ -67,9 +67,9 @@ public class SharedPrefManager {
                 sharedPreferences.getInt(KEY_ORGANIZATIONID, -1),
                 sharedPreferences.getInt(KEY_USERID, -1),
                 sharedPreferences.getString(KEY_ORGANIZATIONCAPTION, null),
+                sharedPreferences.getString(KEY_PHONE, null),
                 sharedPreferences.getBoolean(KEY_ISERROR, true)
         );
-
     }
 
     //This method will triggered when hotel selected
@@ -94,7 +94,7 @@ public class SharedPrefManager {
 
                 sharedPreferences.getString(KEY_HOTELCAPTION, null),
                 sharedPreferences.getString(KEY_HOTELADDRESS, null),
-                sharedPreferences.getString(KEY_HOTELID, null)
+                sharedPreferences.getString(KEY_HOTELID, "")
 
         );
     }
@@ -119,40 +119,36 @@ public class SharedPrefManager {
 
     }
 
-//    public void phoneAndLanguage(ModelPhoneLanguage modelPhoneLanguage) {
-//
-//        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//
-//        editor.putString(KEY_PHONE, modelPhoneLanguage.getPhone());
-//        editor.putString(KEY_LANGUAGE, modelPhoneLanguage.getLanguage());
-//
-//        editor.apply();
-//
-//    }
+    public void phoneAndLanguage(ModelPhoneLanguage modelPhoneLanguage) {
+
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(KEY_PHONE, modelPhoneLanguage.getPhone());
+        editor.putString(KEY_LANGUAGE, modelPhoneLanguage.getLanguage());
+
+        editor.apply();
+
+    }
 
     //This method for getthin phone and languages
-//    public ModelPhoneLanguage getPhoneAndLanguage() {
-//
-//        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-//        return new ModelPhoneLanguage(
-//
-//                sharedPreferences.getString(KEY_PHONE, null ),
-//                sharedPreferences.getString(KEY_LANGUAGE, null)
-//
-//        );
-//
-//    }
+    public ModelPhoneLanguage getPhoneAndLanguage() {
+
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return new ModelPhoneLanguage(
+
+                sharedPreferences.getString(KEY_PHONE, null),
+                sharedPreferences.getString(KEY_LANGUAGE, "en")
+
+        );
+
+    }
 
 
     //this method will checker whether user is already logged in or not
     public boolean isLoggedIn() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        if (sharedPreferences.contains(KEY_USERID) ) {
-            return true;
-        }else {
-            return false;
-        }
+        return sharedPreferences.contains(KEY_USERID);
 
     }
 

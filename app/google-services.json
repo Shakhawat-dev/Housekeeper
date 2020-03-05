@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "951555064109",
+    "firebase_url": "https://my-firebase-application-97090.firebaseio.com",
+    "project_id": "my-firebase-application-97090",
+    "storage_bucket": "my-firebase-application-97090.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951555064109:android:0ee4c510f520b2f451d3a4",
+        "android_client_info": {
+          "package_name": "com.example.housekeeper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "951555064109-vrg2m1c87hp7lvmgb46ga0c4mgevojgb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.housekeeper",
+            "certificate_hash": "f087d93a8abfc24c485260074f3f468793068df8"
+          }
+        },
+        {
+          "client_id": "951555064109-ja10nnkrj57kh4ehid277f4sbp9o5ihf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8OCj3Jul_VvjZaFC-9L1A9_8LAap97Lw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "951555064109-ja10nnkrj57kh4ehid277f4sbp9o5ihf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

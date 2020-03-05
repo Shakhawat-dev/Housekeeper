@@ -1,15 +1,12 @@
 package com.example.housekeeper.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.chaos.view.PinView;
 import com.example.housekeeper.R;
@@ -26,11 +23,10 @@ public class MobileCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile_code);
 
-        pinView = (PinView) findViewById(R.id.pv_input);
-        mContinueBtn = (Button) findViewById(R.id.btn_verify);
+        pinView = findViewById(R.id.pv_input);
+        mContinueBtn = findViewById(R.id.btn_verify);
 
         pinView.setCursorVisible(true);
-
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
@@ -38,7 +34,6 @@ public class MobileCodeActivity extends AppCompatActivity {
             mVerificationCode = extras.getString("Verification Code");
             mToken = extras.getString("Access Token");
             mPhoneNo = extras.getString("Mobile NO");
-
             pinView.setText(mVerificationCode);
 
         }
@@ -52,9 +47,7 @@ public class MobileCodeActivity extends AppCompatActivity {
                 if (pinviewText.equals(mVerificationCode)) {
 
                     Intent intent = new Intent(MobileCodeActivity.this, HotelListActivity.class);
-
                     intent.putExtra("phone no", mPhoneNo);
-
                     startActivity(intent);
                     finish();
 

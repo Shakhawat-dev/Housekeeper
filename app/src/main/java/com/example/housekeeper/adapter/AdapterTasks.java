@@ -1,6 +1,5 @@
 package com.example.housekeeper.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -68,10 +67,10 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
 
             itemView.setOnClickListener(this);
 
-            title = (TextView) itemView.findViewById(R.id.title_tv);
-            status = (TextView) itemView.findViewById(R.id.status_tv);
-            room = (TextView) itemView.findViewById(R.id.room_no_tv);
-            date = (TextView) itemView.findViewById(R.id.date_tv);
+            title = itemView.findViewById(R.id.title_tv);
+            status = itemView.findViewById(R.id.status_tv);
+            room = itemView.findViewById(R.id.room_no_tv);
+            date = itemView.findViewById(R.id.date_tv);
 
         }
 
@@ -85,7 +84,7 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
             Intent intent = new Intent(ctx, TaskDetailsActivity.class);
 
             ctx.startActivity(intent);
-            ((Activity)ctx).finish();
+            //  ((Activity)ctx).finish();
 
 
         }
