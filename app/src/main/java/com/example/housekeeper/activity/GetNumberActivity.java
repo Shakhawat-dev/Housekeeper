@@ -24,14 +24,18 @@ import com.example.housekeeper.R;
 import com.example.housekeeper.api.URLs;
 import com.example.housekeeper.api.VolleySingleton;
 import com.example.housekeeper.custom.MultiLanguage;
+import com.example.housekeeper.model.ModelHotels;
+import com.example.housekeeper.model.ModelLogin;
 import com.example.housekeeper.model.ModelPhoneLanguage;
 import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
+import com.example.housekeeper.utils.Data;
 import com.hbb20.CountryCodePicker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -40,7 +44,7 @@ import java.util.logging.SocketHandler;
 
 public class GetNumberActivity extends AppCompatActivity {
 
-    CountryCodePicker ccp;
+    private CountryCodePicker ccp;
     private TextView mTitle;
     private EditText edPhone;
     private Button mContinueBtn;
@@ -50,78 +54,87 @@ public class GetNumberActivity extends AppCompatActivity {
 
     private SharedPreferences loginPrefs;
     private static final String LOGIN_KEY = "loginKey";
-
+    private AppCompatActivity mContext;
     private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_number);
+        uiInitialize();
+    }
 
+    private void uiInitialize() {
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
         edPhone = (EditText) findViewById(R.id.ed_phone);
         mContinueBtn = (Button) findViewById(R.id.btn_continue);
         mTitle = (TextView) findViewById(R.id.textTitle);
 
-//        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-//            finish();
-//            startActivity(new Intent(this, DashboardActivity.class));
-//            return;
-//        }
-
         mContinueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-                Log.d("abc 1", "Akhane asece");
                 continueSignIn();
-
-//                mTitle.setText(fullPhoneNo);
-
             }
         });
-
     }
 
     private void continueSignIn() {
 
-
-        final String getCurrentLocale = Locale.getDefault().getLanguage();
-
+        Data.hotelsList = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_AUTH,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d(Data.TAG, "SignIn Response : " + response.toString());
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
 
-                            Log.d("abc", response.toString());
-
-                            String accessToken = jsonObject.getString("accessToken");
-                            String verificationCode = jsonObject.getString("verificationCode");
-
-                            // TODO: I'll use this method later...
-//                            JSONArray hotellistObj=jsonObject.getJSONArray("hotelList");
-//                            for (int i = 0; i < hotellistObj.length(); i++) {
-//                                JSONObject object = hotellistObj.getJSONObject(i);
-//
-//                                String hotelId = object.getString("hotelId").trim();
-//                                String hotelCaption = object.getString("hotelCaption").trim();
-//                                Log.d("hotelCaption", hotelCaption);
-//                            }
-
-                            int organizationId = jsonObject.getInt("organizationId");
-                            int userId = jsonObject.getInt("userId");
-                            String organizationCaption = jsonObject.getString("organizationCaption");
                             Boolean isError = jsonObject.getBoolean("isError");
 
-                            if (isError.equals(false)) {
+                            if (!isError) {
+                                String accessToken = jsonObject.getString("accessToken");
+                                String verificationCode = jsonObject.getString("verificationCode");
+                                JSONArray hotellistObj = jsonObject.getJSONArray("hotelList");
+
+
+                                ModelLogin modelLogin = new ModelLogin(
+
+                                        jsonObject.getString("accessToken"),
+                                        jsonObject.getString("verificationCode"),
+                                        jsonObject.getInt("organizationId"),
+                                        jsonObject.getInt("userId"),
+                                        jsonObject.getString("organizationCaption"),
+                                        edPhone.getText().toString().trim(),
+                                        jsonObject.getBoolean("isError")
+
+                                );
+
+                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(modelLogin);
+
+
+                                for (int i = 0; i < hotellistObj.length(); i++) {
+                                    JSONObject object = hotellistObj.getJSONObject(i);
+
+                                    String hoteName = object.getString("hotelCaption").trim();
+                                    String hotelAddress = object.getString("address").trim();
+                                    String hotelId = object.getString("hotelId").trim();
+
+                                    Log.d("hotelCaption", hoteName);
+
+                                    ModelHotels modelHotels = new ModelHotels(hoteName, hotelAddress, hotelId);
+                                    SharedPrefManager.getInstance(mContext).hotelDetails(modelHotels);
+                                    Data.hotelsList.add(modelHotels);
+                                }
+
+
+                                int organizationId = jsonObject.getInt("organizationId");
+                                int userId = jsonObject.getInt("userId");
+                                String organizationCaption = jsonObject.getString("organizationCaption");
+                                // Boolean isError = jsonObject.getBoolean("isError");
+
 
                                 Intent intent = new Intent(GetNumberActivity.this, MobileCodeActivity.class);
-
                                 intent.putExtra("Verification Code", verificationCode);
                                 intent.putExtra("Access Token", accessToken);
                                 intent.putExtra("Mobile NO", fullPhoneNo);
@@ -132,16 +145,12 @@ public class GetNumberActivity extends AppCompatActivity {
 
                                 // Putting phone and language into sharedpreferense
                                 ModelPhoneLanguage modelPhoneLanguage = new ModelPhoneLanguage(fullPhoneNo, language);
-//                                SharedPrefManager.getInstance(getApplicationContext()).phoneAndLanguage(modelPhoneLanguage);
-
-
-//                                Log.d("For Phone NO CHeck: ", fullPhoneNo);
-
                                 startActivity(intent);
                                 finish();
 
+                            } else {
+                                Toast.makeText(GetNumberActivity.this, "Please, try again later", Toast.LENGTH_SHORT).show();
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
 
@@ -168,8 +177,10 @@ public class GetNumberActivity extends AppCompatActivity {
 
 
                 Map<String, String> params = new HashMap<>();
-                params.put("phoneNumber", fullPhoneNo);
+//                params.put("phoneNumber", fullPhoneNo);
+                params.put("phoneNumber", phoneNo);
                 params.put("language", language);
+                Log.i("DATA:", params.toString());
                 return params;
             }
         };
@@ -178,39 +189,4 @@ public class GetNumberActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == android.R.id.home) {
-//            onBackPressed();
-//            return true;
-//        } else if (id == R.id.action_english) {
-//
-//            new SharedPrefManager(this).phoneAndLanguage().s;
-//            new DataPreference(this).isEnglish(true);
-//            MultiLanguage.setApplicationlanguage(this, "en");
-//
-//            new AppManager(this).SetIntent(LoginActivityNew.class);
-//            finish();
-//            return true;
-//        } else if (id == R.id.action_arabic) {
-//            new DataPreference(this).setLanguage("ar");
-//            new DataPreference(this).isEnglish(false);
-//            MultiLanguage.setApplicationlanguage(this, "ar");
-//
-//            new AppManager(this).SetIntent(LoginActivityNew.class);
-//            finish();
-//            return true;
-//        }
-//
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 }
