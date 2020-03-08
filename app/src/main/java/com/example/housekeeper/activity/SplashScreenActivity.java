@@ -28,6 +28,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
 
+        // For showing loading animation
         imageViewLoading = findViewById(R.id.loading);
         Loading.showLoadingImage(SplashScreenActivity.this, imageViewLoading);
 

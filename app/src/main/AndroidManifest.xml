@@ -19,13 +19,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.DefectActivity">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
-        </activity>
+        <activity
+            android:name=".activity.ChecklistActivity"
+            android:parentActivityName=".activity.DashboardActivity"></activity>
+        <activity android:name=".activity.DefectActivity"></activity>
 
         <service android:name=".services.MyService">
             <intent-filter>
@@ -50,9 +47,20 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activity.DashboardActivity"
-            android:label="@string/title_activity_dashboard" />
-        <activity android:name=".activity.TaskDetailsActivity" />
-        <activity android:name=".activity.TaskListActivity" />
+            android:label="@string/title_activity_dashboard">
+
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".activity.TaskDetailsActivity"
+            android:parentActivityName=".activity.TaskListActivity"></activity>
+        <activity
+            android:name=".activity.TaskListActivity"
+            android:parentActivityName=".activity.DashboardActivity" />
         <activity android:name=".activity.HotelListActivity" />
         <activity android:name=".activity.HomeActivity" />
         <activity

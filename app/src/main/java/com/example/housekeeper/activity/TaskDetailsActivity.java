@@ -1,7 +1,5 @@
 package com.example.housekeeper.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,10 +8,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.housekeeper.R;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.housekeeper.R;
 
 public class TaskDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -24,8 +21,10 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_details);
 
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        Button updateBtn = (Button) findViewById(R.id.update_btn);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        final Spinner spinner = findViewById(R.id.spinner);
+        Button updateBtn = findViewById(R.id.update_btn);
 
         spinner.setOnItemSelectedListener(this);
 

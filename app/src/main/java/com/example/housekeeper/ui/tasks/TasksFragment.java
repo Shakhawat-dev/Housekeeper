@@ -112,6 +112,7 @@ public class TasksFragment extends Fragment {
 //                    }
 
 
+//                    if (isError.equals(false)) {
                     //Todo: I'll use this method later...
                     JSONArray tasklistObj = jsonObject.getJSONArray("taskList");
 
@@ -132,7 +133,9 @@ public class TasksFragment extends Fragment {
 
                     adapter = new AdapterTasks(getActivity(), tasksList);
                     recyclerView.setAdapter(adapter);
-
+//                    } else {
+//                        Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+//                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();

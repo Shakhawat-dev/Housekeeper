@@ -1,17 +1,16 @@
 package com.example.housekeeper.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -19,11 +18,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.housekeeper.R;
 import com.example.housekeeper.api.URLs;
 import com.example.housekeeper.api.VolleySingleton;
-import com.example.housekeeper.custom.MultiLanguage;
 import com.example.housekeeper.model.ModelHotels;
 import com.example.housekeeper.model.ModelLogin;
 import com.example.housekeeper.model.ModelPhoneLanguage;
@@ -37,9 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.logging.SocketHandler;
 
 
 public class GetNumberActivity extends AppCompatActivity {
@@ -65,10 +60,10 @@ public class GetNumberActivity extends AppCompatActivity {
     }
 
     private void uiInitialize() {
-        ccp = (CountryCodePicker) findViewById(R.id.ccp);
-        edPhone = (EditText) findViewById(R.id.ed_phone);
-        mContinueBtn = (Button) findViewById(R.id.btn_continue);
-        mTitle = (TextView) findViewById(R.id.textTitle);
+        ccp = findViewById(R.id.ccp);
+        edPhone = findViewById(R.id.ed_phone);
+        mContinueBtn = findViewById(R.id.btn_continue);
+        mTitle = findViewById(R.id.textTitle);
 
         mContinueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,16 +71,23 @@ public class GetNumberActivity extends AppCompatActivity {
                 continueSignIn();
             }
         });
+
+
     }
 
     private void continueSignIn() {
+
+        String countryCode = ccp.getSelectedCountryCode().trim();
+        String phoneNo = edPhone.getText().toString().trim();
+
+        fullPhoneNo = countryCode + phoneNo;
 
         Data.hotelsList = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_AUTH,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d(Data.TAG, "SignIn Response : " + response.toString());
+                        Log.d(Data.TAG, "SignIn Response : " + response);
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -105,7 +107,7 @@ public class GetNumberActivity extends AppCompatActivity {
                                         jsonObject.getInt("organizationId"),
                                         jsonObject.getInt("userId"),
                                         jsonObject.getString("organizationCaption"),
-                                        edPhone.getText().toString().trim(),
+                                        fullPhoneNo,
                                         jsonObject.getBoolean("isError")
 
                                 );
@@ -149,7 +151,8 @@ public class GetNumberActivity extends AppCompatActivity {
                                 finish();
 
                             } else {
-                                Toast.makeText(GetNumberActivity.this, "Please, try again later", Toast.LENGTH_SHORT).show();
+                                String message = jsonObject.getString("message");
+                                Toast.makeText(GetNumberActivity.this, message, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -169,16 +172,16 @@ public class GetNumberActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                String countryCode = ccp.getSelectedCountryCode().trim();
-                String phoneNo = edPhone.getText().toString().trim();
-
-                fullPhoneNo = countryCode + phoneNo;
+//                String countryCode = ccp.getSelectedCountryCode().trim();
+//                String phoneNo = edPhone.getText().toString().trim();
+//
+//                fullPhoneNo = countryCode + phoneNo;
                 language = "en";
 
 
                 Map<String, String> params = new HashMap<>();
-//                params.put("phoneNumber", fullPhoneNo);
-                params.put("phoneNumber", phoneNo);
+                params.put("phoneNumber", fullPhoneNo);
+//                params.put("phoneNumber", phoneNo);
                 params.put("language", language);
                 Log.i("DATA:", params.toString());
                 return params;

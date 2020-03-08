@@ -9,7 +9,7 @@
     <!-- Menu * item Icon Size-->
     <dimen name="more_menu_size">40dp</dimen>
     <dimen name="task_item_icon_size">70dp</dimen>
-    <dimen name="home_menu_icon_size">60dp</dimen>
+    <dimen name="home_menu_icon_size">64dp</dimen>
 
 
     <!-- Margin & padding -->
