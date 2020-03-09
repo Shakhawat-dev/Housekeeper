@@ -1,20 +1,46 @@
 package com.example.housekeeper.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.housekeeper.R;
+import com.example.housekeeper.api.URLs;
+import com.example.housekeeper.api.VolleySingleton;
+import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
+import com.example.housekeeper.utils.Data;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TaskDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+    private String[] categories = {"Void", "InProgress", "Completed"};
+    private String spinnerSelected;
+    private String remarkTxt;
 
-    String[] categories = { "Clean", "Dirty"};
+    private Spinner spinner;
+    private ArrayAdapter aa;
+    private TextView taskTitle, taskStatus, taskRoom, taskDate;
+    private EditText remarkEd;
+    private Button updateBtn;
+    private String mAccessToken, mPhoneNo, mLanguage, taskId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,30 +49,125 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final Spinner spinner = findViewById(R.id.spinner);
-        Button updateBtn = findViewById(R.id.update_btn);
+        uiInitialization();
+        setSpinner();
+
+        if (Data.task != null) {
+            setData();
+        }
+
+    }
+
+    private void uiInitialization() {
+        taskTitle = findViewById(R.id.title_tv);
+        taskStatus = findViewById(R.id.status_tv);
+        taskRoom = findViewById(R.id.room_no_tv);
+        taskDate = findViewById(R.id.date_tv);
+        spinner = findViewById(R.id.spinner);
+        updateBtn = findViewById(R.id.update_btn);
+        remarkEd = findViewById(R.id.remark_ed);
 
         spinner.setOnItemSelectedListener(this);
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateTaskStatus();
+            }
+        });
 
-        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
+        mAccessToken = SharedPrefManager.getInstance(this).getLogin().getAccessToken();
+        mPhoneNo = SharedPrefManager.getInstance(this).getPhoneAndLanguage().getPhone();
+        mLanguage = SharedPrefManager.getInstance(this).getPhoneAndLanguage().getLanguage();
+        taskId = Data.task.getId().toString();
+    }
+
+    private void setData() {
+        taskTitle.setText(Data.task.getTitle());
+        taskStatus.setText(Data.task.getStatus());
+        taskRoom.setText(Data.task.getRoom());
+        taskDate.setText(Data.task.getDate());
+    }
+
+    private void setSpinner() {
+
+        aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner.setAdapter(aa);
 
+        if (Data.task.getStatus().equals("Completed")) {
+            spinner.setSelection(2);
+        } else if (Data.task.getStatus().equals("In Progress")) {
+            spinner.setSelection(1);
+        } else {
+            spinner.setSelection(0);
+        }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        String item = parent.getItemAtPosition(position).toString();
-
-        Toast.makeText(getApplicationContext(), "Selected" + item , Toast.LENGTH_LONG).show();
-
+        spinnerSelected = parent.getItemAtPosition(position).toString();
+//        if (spinnerSelected.equals("In Progress")) {
+//            spinnerSelected = "InPrgress";
+//        }
+//        Toast.makeText(getApplicationContext(), "Selected" + spinnerSelected , Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    private void updateTaskStatus() {
+        remarkTxt = remarkEd.getText().toString().trim();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_TASK_UPDATE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(Data.TAG, "Task Update RESPONSE: " + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    Boolean isError = jsonObject.getBoolean("isError");
+                    String message = jsonObject.getString("message");
+
+                    if (!isError) {
+                        Toast.makeText(TaskDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(TaskDetailsActivity.this, DashboardActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(TaskDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("phoneNumber", mPhoneNo);
+                params.put("language", mLanguage);
+                params.put("authToken", mAccessToken);
+                params.put("progressStatusKey", spinnerSelected);
+                params.put("taskId", taskId);
+                params.put("remark", remarkTxt);
+                Log.i(Data.TAG, params.toString());
+
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+    }
+
+
 
 }

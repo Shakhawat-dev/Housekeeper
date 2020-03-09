@@ -86,7 +86,7 @@ public class TasksFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_TASKS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d(Data.TAG, "RESPONSE:" + response);
+                Log.d(Data.TAG, "Task RESPONSE:" + response);
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -119,14 +119,16 @@ public class TasksFragment extends Fragment {
                     for (int i = 0; i < tasklistObj.length(); i++) {
                         JSONObject object = tasklistObj.getJSONObject(i);
 
+                        Integer id = object.getInt("id");
                         String taskCaption = object.getString("taskCaption").trim();
                         String progressStatusKey = object.getString("progressStatusKey").trim();
                         String roomCaption = object.getString("roomCaption").trim();
                         String fromDate = object.getString("fromDate").trim();
+                        Integer priorityRating = object.getInt("priorityRating");
 
                         Log.d("taskCaption", taskCaption);
 
-                        ModelTasks modelTasks = new ModelTasks(taskCaption, progressStatusKey, roomCaption, fromDate);
+                        ModelTasks modelTasks = new ModelTasks(id, taskCaption, progressStatusKey, roomCaption, fromDate, priorityRating);
                         tasksList.add(modelTasks);
                     }
 

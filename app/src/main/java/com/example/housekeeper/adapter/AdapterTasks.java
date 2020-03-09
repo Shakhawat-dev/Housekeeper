@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.housekeeper.R;
 import com.example.housekeeper.activity.TaskDetailsActivity;
 import com.example.housekeeper.model.ModelTasks;
+import com.example.housekeeper.utils.Data;
 
 import java.util.List;
 
@@ -47,6 +49,7 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
         holder.status.setText(tasks.getStatus());
         holder.room.setText(tasks.getRoom());
         holder.date.setText(tasks.getDate());
+        holder.priorityRating.setRating(tasks.getPriorityRating());
 
     }
 
@@ -61,6 +64,7 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
         public TextView status;
         public TextView room;
         public TextView date;
+        public RatingBar priorityRating;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,6 +75,7 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
             status = itemView.findViewById(R.id.status_tv);
             room = itemView.findViewById(R.id.room_no_tv);
             date = itemView.findViewById(R.id.date_tv);
+            priorityRating = itemView.findViewById(R.id.priority_rating);
 
         }
 
@@ -79,8 +84,8 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
 
             int position = getAdapterPosition();
 
-            ModelTasks tasksList = modelTasksList.get(position);
-
+            ModelTasks task = modelTasksList.get(position);
+            Data.task = task;
             Intent intent = new Intent(ctx, TaskDetailsActivity.class);
 
             ctx.startActivity(intent);

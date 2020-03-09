@@ -65,8 +65,7 @@
                 android:inputType="phone"
                 android:maxLength="11"
                 android:padding="12dp"
-                android:singleLine="true"
-                android:text="123456789" />
+                android:singleLine="true" />
 
         </LinearLayout>
 

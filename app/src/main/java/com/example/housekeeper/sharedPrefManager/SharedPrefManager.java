@@ -1,10 +1,8 @@
 package com.example.housekeeper.sharedPrefManager;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.example.housekeeper.activity.GetNumberActivity;
 import com.example.housekeeper.model.ModelHotels;
 import com.example.housekeeper.model.ModelLogin;
 import com.example.housekeeper.model.ModelPhoneLanguage;
@@ -158,7 +156,7 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        mCtx.startActivity(new Intent(mCtx, GetNumberActivity.class));
+//        mCtx.startActivity(new Intent(mCtx, GetNumberActivity.class));
     }
 
 }

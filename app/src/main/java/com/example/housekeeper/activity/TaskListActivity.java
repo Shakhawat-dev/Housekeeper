@@ -35,10 +35,12 @@ public class TaskListActivity extends AppCompatActivity {
         for (int i = 0; i < 10; i++) {
 
             ModelTasks modelTasks = new ModelTasks(
+                    i + 1,
                     "Title" + (i+1),
                     "Status",
                     "Room",
-                    "Date"
+                    "Date",
+                    3
             );
 
             tasksList.add(modelTasks);
