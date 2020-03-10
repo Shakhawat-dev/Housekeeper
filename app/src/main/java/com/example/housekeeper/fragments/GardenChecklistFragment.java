@@ -1,4 +1,4 @@
-package com.example.housekeeper;
+package com.example.housekeeper.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,13 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.housekeeper.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RoomChecklistFragment extends Fragment {
+public class GardenChecklistFragment extends Fragment {
 
-    public RoomChecklistFragment() {
+    public GardenChecklistFragment() {
         // Required empty public constructor
     }
 
@@ -22,6 +24,6 @@ public class RoomChecklistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_room_checklist, container, false);
+        return inflater.inflate(R.layout.fragment_garden_checklist, container, false);
     }
 }

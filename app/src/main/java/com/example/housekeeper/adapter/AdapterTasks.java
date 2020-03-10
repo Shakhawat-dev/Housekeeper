@@ -24,10 +24,8 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
     private List<ModelTasks> modelTasksList;
 
     public AdapterTasks (Context context, List tasklist) {
-
         this.ctx = context;
         this.modelTasksList = tasklist;
-
     }
 
     @NonNull

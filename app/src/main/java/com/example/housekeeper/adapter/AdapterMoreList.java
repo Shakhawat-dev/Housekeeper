@@ -4,20 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.housekeeper.activity.GetNumberActivity;
-import com.example.housekeeper.activity.MainActivity;
 import com.example.housekeeper.R;
+import com.example.housekeeper.activity.GetNumberActivity;
 import com.example.housekeeper.model.ModelMoreList;
 import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
 
@@ -68,7 +65,7 @@ public class AdapterMoreList extends RecyclerView.Adapter<AdapterMoreList.ViewHo
 
             itemView.setOnClickListener(this);
 
-            name = (TextView) itemView.findViewById(R.id.list_title);
+            name = itemView.findViewById(R.id.list_title);
 
         }
 
@@ -102,10 +99,10 @@ public class AdapterMoreList extends RecyclerView.Adapter<AdapterMoreList.ViewHo
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                builder.setMessage("Are you sure want to sign out?").setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
 
-                Toast.makeText(v.getContext(), "Sign Out Tapped", Toast.LENGTH_LONG).show();
+//                Toast.makeText(v.getContext(), "Sign Out Tapped", Toast.LENGTH_LONG).show();
 
 
 

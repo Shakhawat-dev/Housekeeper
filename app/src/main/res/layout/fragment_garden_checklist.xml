@@ -6,7 +6,7 @@
     android:background="@color/colorPrimaryDark"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".GardenChecklistFragment">
+    tools:context=".fragments.GardenChecklistFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

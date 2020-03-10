@@ -8,5 +8,6 @@ public class URLs {
     public static final String URL_AUTH = ROOT_URL + "auth?";
     public static final String URL_TASKS = ROOT_URL + "tasklist";
     public static final String URL_TASK_UPDATE = ROOT_URL + "statusUpdate";
+    public static final String URL_CHECKLIST_TYPE = ROOT_URL + "checkListType";
 
 }

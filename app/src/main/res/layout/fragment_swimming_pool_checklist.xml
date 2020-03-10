@@ -6,7 +6,7 @@
     android:background="@color/colorAccent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".SwimmingPoolChecklistFragment">
+    tools:context=".fragments.SwimmingPoolChecklistFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
