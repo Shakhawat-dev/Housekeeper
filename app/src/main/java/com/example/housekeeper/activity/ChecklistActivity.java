@@ -5,24 +5,24 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.housekeeper.R;
+import com.example.housekeeper.adapter.AdapterChecklist;
 import com.example.housekeeper.api.URLs;
 import com.example.housekeeper.api.VolleySingleton;
-import com.example.housekeeper.fragments.GardenChecklistFragment;
-import com.example.housekeeper.fragments.RoomChecklistFragment;
-import com.example.housekeeper.fragments.SwimmingPoolChecklistFragment;
+import com.example.housekeeper.model.ModelChecklist;
 import com.example.housekeeper.model.ModelChecklistType;
 import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
 import com.example.housekeeper.utils.Data;
@@ -32,53 +32,81 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChecklistActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private static FragmentManager fragmentManager;
-    //    String[] checkLists = {"Room", "Swimming pool", "Garden"};
-    private List<String> checkLists = new ArrayList<>();
     private List<ModelChecklistType> checklistTypes = new ArrayList<>();
     private Spinner spinner;
+    private ArrayAdapter<ModelChecklistType> spinnerAdapter;
     private String mAccessToken, mPhoneNo, mLanguage;
+
+    private RecyclerView roomRecyclerVIew;
+    private Button updateBtn;
+    private RecyclerView.Adapter recyclerViewAdapter;
+    private LinearLayoutManager linearLayoutManager;
+    private List<ModelChecklist> checklists = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checklist);
 
+        getCheckLists();
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mLanguage = SharedPrefManager.getInstance(this).getPhoneAndLanguage().getLanguage();
-        getCheckLists();
+
+//        fragmentManager = getSupportFragmentManager();
 
         spinner = findViewById(R.id.checklist_spinner);
+        spinnerAdapter = new ArrayAdapter<ModelChecklistType>(this, android.R.layout.simple_spinner_dropdown_item, checklistTypes);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setOnItemSelectedListener(this);
 
-        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, checkLists);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        fragmentManager = getSupportFragmentManager();
 
-        spinner.setAdapter(aa);
+//        if (findViewById(R.id.fragment_container_framelayout) != null) {
+//            if (savedInstanceState != null) {
+//                return;
+//            }
+//
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            RoomChecklistFragment roomChecklistFragment = new RoomChecklistFragment();
+//            fragmentTransaction.add(R.id.fragment_container_framelayout, roomChecklistFragment, null);
+//            fragmentTransaction.commit();
+//        }
 
-        fragmentManager = getSupportFragmentManager();
+        roomRecyclerVIew = findViewById(R.id.room_recyclerview);
+        updateBtn = findViewById(R.id.update_btn);
+        roomRecyclerVIew.setHasFixedSize(true);
+        mAccessToken = SharedPrefManager.getInstance(this).getLogin().getAccessToken();
+        mPhoneNo = SharedPrefManager.getInstance(this).getPhoneAndLanguage().getPhone();
+        mLanguage = SharedPrefManager.getInstance(this).getPhoneAndLanguage().getLanguage();
+        linearLayoutManager = new LinearLayoutManager(this);
 
-        if (findViewById(R.id.fragment_container_framelayout) != null) {
-            if (savedInstanceState != null) {
-                return;
+        roomRecyclerVIew.setLayoutManager(linearLayoutManager);
+        recyclerViewAdapter = new AdapterChecklist(this, checklists);
+        roomRecyclerVIew.setAdapter(recyclerViewAdapter);
+
+
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (ModelChecklist list : checklists) {
+
+                    Log.i("Member name: ", list.getCheckItemName() + list.isChecked());
+
+                }
+//                Log.d(TAG, "onClick: UpdateBtn" + checklists.);
             }
-
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            RoomChecklistFragment roomChecklistFragment = new RoomChecklistFragment();
-            fragmentTransaction.add(R.id.fragment_container_framelayout, roomChecklistFragment, null);
-            fragmentTransaction.commit();
-        }
+        });
 
     }
 
     public void getCheckLists() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_CHECKLIST_TYPE,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_CHECKLIST_TYPE + "?lang=" + mLanguage,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -88,24 +116,25 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray checkListTypeObj = jsonObject.getJSONArray("checkListType");
 
-                            Boolean isError = jsonObject.getBoolean("isError");
+//                            Boolean isError = jsonObject.getBoolean("isError");
 
-                            if (!isError) {
+//                            if (!isError) {
 
-                                for (int i = 0; i < checkListTypeObj.length(); i++) {
-                                    JSONObject object = checkListTypeObj.getJSONObject(i);
+                            for (int i = 0; i < checkListTypeObj.length(); i++) {
+                                JSONObject object = checkListTypeObj.getJSONObject(i);
 
-                                    String optionKey = object.getString("optionKey").trim();
-                                    String optionValue = object.getString("optionValue").trim();
+                                String optionKey = object.getString("optionKey").trim();
+                                String optionValue = object.getString("optionValue").trim();
 
-                                    checkLists.add(optionValue);
-                                    ModelChecklistType checklistType = new ModelChecklistType(optionKey, optionValue);
-                                    checklistTypes.add(checklistType);
-                                }
-                            } else {
-                                String message = jsonObject.getString("message");
-                                Toast.makeText(ChecklistActivity.this, message, Toast.LENGTH_SHORT).show();
+                                ModelChecklistType checklistType = new ModelChecklistType(optionKey, optionValue);
+                                checklistTypes.add(checklistType);
+                                // Call Spinner Adapter
+                                spinner.setAdapter(spinnerAdapter);
                             }
+//                            } else {
+//                                String message = jsonObject.getString("message");
+//                                Toast.makeText(ChecklistActivity.this, message, Toast.LENGTH_SHORT).show();
+//                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -117,16 +146,17 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(ChecklistActivity.this, "error number 2" + " " + error.toString(), Toast.LENGTH_SHORT).show();
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("language", mLanguage);
-                Log.i(Data.TAG, params.toString());
-                return params;
-            }
-
-        };
+        });
+//        {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("lang", mLanguage);
+//                Log.i(Data.TAG, params.toString());
+//                return params;
+//            }
+//
+//        };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
@@ -134,15 +164,37 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = parent.getItemAtPosition(position).toString();
+        Toast.makeText(ChecklistActivity.this, "Selected: " + item, Toast.LENGTH_SHORT).show();
+
+//        RoomChecklistFragment roomChecklistFragment = new RoomChecklistFragment();
+//
+//        Bundle data = new Bundle();//Use bundle to pass data
+//        data.putString("checklist_type", item);//put string, int, etc in bundle with a key value
+//        roomChecklistFragment.setArguments(data);//Finally s
+
+        checklists.clear();
+        for (int i = 0; i < 10; i++) {
+            checklists.add(new ModelChecklist(item + i, false));
+        }
+
+        recyclerViewAdapter.notifyDataSetChanged();
+
+
+//        if (findViewById(R.id.fragment_container_framelayout) != null) {
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.add(R.id.fragment_container_framelayout, roomChecklistFragment, null);
+//            fragmentTransaction.commit();
+//        }
+
 
         // Add addToBackStack if you want to get to the default fragment
-        if (position == 1) {
-            fragmentManager.beginTransaction().replace(R.id.fragment_container_framelayout, new SwimmingPoolChecklistFragment(), null).commit();
-        } else if (position == 2) {
-            fragmentManager.beginTransaction().replace(R.id.fragment_container_framelayout, new GardenChecklistFragment(), null).commit();
-        } else {
-            fragmentManager.beginTransaction().replace(R.id.fragment_container_framelayout, new RoomChecklistFragment(), null).commit();
-        }
+//        if (position == 1) {
+//            fragmentManager.beginTransaction().replace(R.id.fragment_container_framelayout, new SwimmingPoolChecklistFragment(), null).commit();
+//        } else if (position == 2) {
+//            fragmentManager.beginTransaction().replace(R.id.fragment_container_framelayout, new GardenChecklistFragment(), null).commit();
+//        } else {
+//            fragmentManager.beginTransaction().replace(R.id.fragment_container_framelayout, new RoomChecklistFragment(), null).commit();
+//        }
     }
 
     @Override

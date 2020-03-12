@@ -177,7 +177,7 @@ public class GetNumberActivity extends AppCompatActivity {
 //
 //                fullPhoneNo = countryCode + phoneNo;
 
-                language = "ar";
+                language = "en";
 
                 Map<String, String> params = new HashMap<>();
                 params.put("phoneNumber", fullPhoneNo);

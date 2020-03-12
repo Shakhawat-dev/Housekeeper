@@ -31,6 +31,7 @@ public class RoomChecklistFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private List<ModelChecklist> checklists = new ArrayList<>();
     private String mAccessToken, mPhoneNo, mLanguage;
+    private String checkListTypeArg;
 
     public RoomChecklistFragment() {
         // Required empty public constructor
@@ -43,6 +44,8 @@ public class RoomChecklistFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_room_checklist, container, false);
 
+        checkListTypeArg = getArguments().getString("checklist_type");
+
         roomRecyclerVIew = root.findViewById(R.id.room_recyclerview);
         updateBtn = root.findViewById(R.id.update_btn);
         roomRecyclerVIew.setHasFixedSize(true);
@@ -51,20 +54,24 @@ public class RoomChecklistFragment extends Fragment {
         mLanguage = SharedPrefManager.getInstance(root.getContext()).getPhoneAndLanguage().getLanguage();
         linearLayoutManager = new LinearLayoutManager(getContext());
 
+
         for (int i = 0; i < 10; i++) {
-            checklists.add(new ModelChecklist("Dummy " + i, false));
+            checklists.add(new ModelChecklist(checkListTypeArg + i, false));
         }
 
 
         roomRecyclerVIew.setLayoutManager(linearLayoutManager);
         adapter = new AdapterChecklist(getContext(), checklists);
         roomRecyclerVIew.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 for (ModelChecklist list : checklists) {
+
                     Log.i("Member name: ", list.getCheckItemName() + list.isChecked());
+
                 }
 //                Log.d(TAG, "onClick: UpdateBtn" + checklists.);
             }

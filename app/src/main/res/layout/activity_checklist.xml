@@ -45,12 +45,31 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <FrameLayout
+        <!--<FrameLayout
             android:id="@+id/fragment_container_framelayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </FrameLayout>
+        </FrameLayout>-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/room_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/update_btn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16sp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/btn_back_gradient"
+            android:text="Update"
+            android:textColor="#fff" />
 
 
     </LinearLayout>

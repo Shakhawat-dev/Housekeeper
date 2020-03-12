@@ -27,5 +27,10 @@ public class ModelChecklistType {
     public void setOptionValue(String optionValue) {
         this.optionValue = optionValue;
     }
+
+    @Override
+    public String toString() {
+        return optionValue;
+    }
 }
 
