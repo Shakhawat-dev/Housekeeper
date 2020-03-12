@@ -1,31 +1,36 @@
 package com.example.housekeeper.model;
 
-public class ModelLogin {
+import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
+public class LoginResponse {
+    @SerializedName("accessToken")
     private String accessToken;
+    @SerializedName("verificationCode")
     private String verificationCode;
+    @SerializedName("hotelList")
+    private List<ModelHotels> hotelList;
+    @SerializedName("organizationId")
     private int organizationId;
+    @SerializedName("userId")
     private int userId;
+    @SerializedName("organizationCaption")
     private String organizationCaption;
-    private String phoneNo;
+    @SerializedName("isError")
     private boolean isError;
 
-
-    public ModelLogin() {
+    public LoginResponse() {
     }
 
-    public ModelLogin(String accessToken, String verificationCode, int organizationId, int userId, String organizationCaption, String phoneNo, boolean isError) {
+    public LoginResponse(String accessToken, String verificationCode, List<ModelHotels> hotelList, int organizationId, int userId, String organizationCaption, boolean isError) {
         this.accessToken = accessToken;
         this.verificationCode = verificationCode;
+        this.hotelList = hotelList;
         this.organizationId = organizationId;
         this.userId = userId;
         this.organizationCaption = organizationCaption;
-        this.phoneNo = phoneNo;
         this.isError = isError;
-    }
-
-    public String getPhoneNo() {
-        return phoneNo;
     }
 
     public String getAccessToken() {
@@ -42,6 +47,14 @@ public class ModelLogin {
 
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
+    }
+
+    public List<ModelHotels> getHotelList() {
+        return hotelList;
+    }
+
+    public void setHotelList(List<ModelHotels> hotelList) {
+        this.hotelList = hotelList;
     }
 
     public int getOrganizationId() {

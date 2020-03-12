@@ -4,6 +4,10 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     defaultConfig {
         applicationId "com.example.housekeeper"
         minSdkVersion 16
@@ -40,6 +44,10 @@ dependencies {
     implementation 'com.android.support:support-v4:29.0.0'
     implementation 'com.android.support:cardview-v7:29.0.0'
     implementation 'com.android.support:appcompat-v7:29.0.0'
+
+    // Retrofit Api
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
 
 //    Country Code Picker
     implementation 'com.hbb20:ccp:2.3.4'

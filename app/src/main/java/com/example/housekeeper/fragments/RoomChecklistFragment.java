@@ -1,7 +1,6 @@
 package com.example.housekeeper.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,7 @@ public class RoomChecklistFragment extends Fragment {
 
 
         for (int i = 0; i < 10; i++) {
-            checklists.add(new ModelChecklist(checkListTypeArg + i, false));
+//            checklists.add(new ModelChecklist(checkListTypeArg + i, false));
         }
 
 
@@ -70,7 +69,7 @@ public class RoomChecklistFragment extends Fragment {
             public void onClick(View v) {
                 for (ModelChecklist list : checklists) {
 
-                    Log.i("Member name: ", list.getCheckItemName() + list.isChecked());
+//                    Log.i("Member name: ", list.getCheckItemName() + list.isChecked());
 
                 }
 //                Log.d(TAG, "onClick: UpdateBtn" + checklists.);

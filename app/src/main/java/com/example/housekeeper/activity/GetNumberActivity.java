@@ -12,15 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.example.housekeeper.R;
-import com.example.housekeeper.api.URLs;
-import com.example.housekeeper.api.VolleySingleton;
+import com.example.housekeeper.api.RetrofitClient;
 import com.example.housekeeper.model.ModelHotels;
 import com.example.housekeeper.model.ModelLogin;
 import com.example.housekeeper.model.ModelPhoneLanguage;
@@ -32,9 +25,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+//import com.android.volley.AuthFailureError;
+//import com.android.volley.Request;
+//import com.android.volley.RequestQueue;
+//import com.android.volley.Response;
+//import com.android.volley.VolleyError;
+//import com.android.volley.toolbox.StringRequest;
 
 
 public class GetNumberActivity extends AppCompatActivity {
@@ -50,7 +54,7 @@ public class GetNumberActivity extends AppCompatActivity {
     private SharedPreferences loginPrefs;
     private static final String LOGIN_KEY = "loginKey";
     private AppCompatActivity mContext;
-    private RequestQueue queue;
+//    private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,54 +72,60 @@ public class GetNumberActivity extends AppCompatActivity {
         mContinueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                continueSignIn();
+//                continueSignIn();
+                signIn();
             }
         });
-
-
     }
 
-    private void continueSignIn() {
-
+    private void signIn() {
         String countryCode = ccp.getSelectedCountryCode().trim();
         String phoneNo = edPhone.getText().toString().trim();
-
         fullPhoneNo = countryCode + phoneNo;
-
+        language = "en";
         Data.hotelsList = new ArrayList<>();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_AUTH,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d(Data.TAG, "SignIn Response : " + response);
 
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
+        Call<ResponseBody> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .loginWithMobile(fullPhoneNo, language);
 
-                            Boolean isError = jsonObject.getBoolean("isError");
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s = null;
 
-                            if (!isError) {
-                                String accessToken = jsonObject.getString("accessToken");
-                                String verificationCode = jsonObject.getString("verificationCode");
-                                JSONArray hotellistObj = jsonObject.getJSONArray("hotelList");
+                try {
+                    s = response.body().string();
+//                    Toast.makeText(GetNumberActivity.this, s, Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
+                if (s != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
 
-                                ModelLogin modelLogin = new ModelLogin(
+                        Boolean isError = jsonObject.getBoolean("isError");
 
-                                        jsonObject.getString("accessToken"),
-                                        jsonObject.getString("verificationCode"),
-                                        jsonObject.getInt("organizationId"),
-                                        jsonObject.getInt("userId"),
-                                        jsonObject.getString("organizationCaption"),
-                                        fullPhoneNo,
-                                        jsonObject.getBoolean("isError")
+                        if (!isError) {
+                            String accessToken = jsonObject.getString("accessToken");
+                            String verificationCode = jsonObject.getString("verificationCode");
+                            JSONArray hotellistObj = jsonObject.getJSONArray("hotelList");
 
-                                );
+                            ModelLogin modelLogin = new ModelLogin(
+                                    jsonObject.getString("accessToken"),
+                                    jsonObject.getString("verificationCode"),
+                                    jsonObject.getInt("organizationId"),
+                                    jsonObject.getInt("userId"),
+                                    jsonObject.getString("organizationCaption"),
+                                    fullPhoneNo,
+                                    jsonObject.getBoolean("isError")
+                            );
 
-                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(modelLogin);
+                            SharedPrefManager.getInstance(getApplicationContext()).userLogin(modelLogin);
 
-
-                                for (int i = 0; i < hotellistObj.length(); i++) {
+                            for (int i = 0; i < hotellistObj.length(); i++) {
                                     JSONObject object = hotellistObj.getJSONObject(i);
 
                                     String hoteName = object.getString("hotelCaption").trim();
@@ -129,12 +139,10 @@ public class GetNumberActivity extends AppCompatActivity {
                                     Data.hotelsList.add(modelHotels);
                                 }
 
-
-                                int organizationId = jsonObject.getInt("organizationId");
+                            int organizationId = jsonObject.getInt("organizationId");
                                 int userId = jsonObject.getInt("userId");
                                 String organizationCaption = jsonObject.getString("organizationCaption");
                                 // Boolean isError = jsonObject.getBoolean("isError");
-
 
                                 Intent intent = new Intent(GetNumberActivity.this, MobileCodeActivity.class);
                                 intent.putExtra("Verification Code", verificationCode);
@@ -149,47 +157,135 @@ public class GetNumberActivity extends AppCompatActivity {
                                 ModelPhoneLanguage modelPhoneLanguage = new ModelPhoneLanguage(fullPhoneNo, language);
                                 startActivity(intent);
                                 finish();
-
-                            } else {
-                                String message = jsonObject.getString("message");
-                                Toast.makeText(GetNumberActivity.this, message, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-
-                            Toast.makeText(GetNumberActivity.this, "error number 1" + " " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
 
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Toast.makeText(GetNumberActivity.this, "error number 2" + " " + error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-//                String countryCode = ccp.getSelectedCountryCode().trim();
-//                String phoneNo = edPhone.getText().toString().trim();
-//
-//                fullPhoneNo = countryCode + phoneNo;
-
-                language = "en";
-
-                Map<String, String> params = new HashMap<>();
-                params.put("phoneNumber", fullPhoneNo);
-//                params.put("phoneNumber", phoneNo);
-                params.put("language", language);
-                Log.i("DATA:", params.toString());
-                return params;
+                }
             }
-        };
 
-        // Singleton class call for queue
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(GetNumberActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
+
+//    private void continueSignIn() {
+//
+//        String countryCode = ccp.getSelectedCountryCode().trim();
+//        String phoneNo = edPhone.getText().toString().trim();
+//        fullPhoneNo = countryCode + phoneNo;
+//        Data.hotelsList = new ArrayList<>();
+//
+////        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_AUTH,
+////                new Response.Listener<String>() {
+////                    @Override
+////                    public void onResponse(String response) {
+////                        Log.d(Data.TAG, "SignIn Response : " + response);
+////
+////                        try {
+////                            JSONObject jsonObject = new JSONObject(response);
+////
+////                            Boolean isError = jsonObject.getBoolean("isError");
+////
+////                            if (!isError) {
+////                                String accessToken = jsonObject.getString("accessToken");
+////                                String verificationCode = jsonObject.getString("verificationCode");
+////                                JSONArray hotellistObj = jsonObject.getJSONArray("hotelList");
+////
+////
+////                                ModelLogin modelLogin = new ModelLogin(
+////
+////                                        jsonObject.getString("accessToken"),
+////                                        jsonObject.getString("verificationCode"),
+////                                        jsonObject.getInt("organizationId"),
+////                                        jsonObject.getInt("userId"),
+////                                        jsonObject.getString("organizationCaption"),
+////                                        fullPhoneNo,
+////                                        jsonObject.getBoolean("isError")
+////
+////                                );
+////
+////                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(modelLogin);
+////
+////
+////                                for (int i = 0; i < hotellistObj.length(); i++) {
+////                                    JSONObject object = hotellistObj.getJSONObject(i);
+////
+////                                    String hoteName = object.getString("hotelCaption").trim();
+////                                    String hotelAddress = object.getString("address").trim();
+////                                    String hotelId = object.getString("hotelId").trim();
+////
+////                                    Log.d("hotelCaption", hoteName);
+////
+////                                    ModelHotels modelHotels = new ModelHotels(hoteName, hotelAddress, hotelId);
+////                                    SharedPrefManager.getInstance(mContext).hotelDetails(modelHotels);
+////                                    Data.hotelsList.add(modelHotels);
+////                                }
+////
+////
+////                                int organizationId = jsonObject.getInt("organizationId");
+////                                int userId = jsonObject.getInt("userId");
+////                                String organizationCaption = jsonObject.getString("organizationCaption");
+////                                // Boolean isError = jsonObject.getBoolean("isError");
+////
+////
+////                                Intent intent = new Intent(GetNumberActivity.this, MobileCodeActivity.class);
+////                                intent.putExtra("Verification Code", verificationCode);
+////                                intent.putExtra("Access Token", accessToken);
+////                                intent.putExtra("Mobile NO", fullPhoneNo);
+////                                intent.putExtra("Organization ID", organizationId);
+////                                intent.putExtra("User ID", userId);
+////                                intent.putExtra("Organization Caption", organizationCaption);
+////                                intent.putExtra("Is Error", isError);
+////
+////                                // Putting phone and language into sharedpreferense
+////                                ModelPhoneLanguage modelPhoneLanguage = new ModelPhoneLanguage(fullPhoneNo, language);
+////                                startActivity(intent);
+////                                finish();
+////
+////                            } else {
+////                                String message = jsonObject.getString("message");
+////                                Toast.makeText(GetNumberActivity.this, message, Toast.LENGTH_SHORT).show();
+////                            }
+////                        } catch (JSONException e) {
+////                            e.printStackTrace();
+////
+////                            Toast.makeText(GetNumberActivity.this, "error number 1" + " " + e.toString(), Toast.LENGTH_SHORT).show();
+////                        }
+////
+////                    }
+////                },
+////                new Response.ErrorListener() {
+////                    @Override
+////                    public void onErrorResponse(VolleyError error) {
+////
+////                        Toast.makeText(GetNumberActivity.this, "error number 2" + " " + error.toString(), Toast.LENGTH_SHORT).show();
+////                    }
+////                }) {
+////            @Override
+////            protected Map<String, String> getParams() throws AuthFailureError {
+////
+//////                String countryCode = ccp.getSelectedCountryCode().trim();
+//////                String phoneNo = edPhone.getText().toString().trim();
+//////
+//////                fullPhoneNo = countryCode + phoneNo;
+////
+////                language = "en";
+////
+////                Map<String, String> params = new HashMap<>();
+////                params.put("phoneNumber", fullPhoneNo);
+//////                params.put("phoneNumber", phoneNo);
+////                params.put("language", language);
+////                Log.i("DATA:", params.toString());
+////                return params;
+////            }
+////        };
+////
+////        // Singleton class call for queue
+////        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+//
+//    }
 }

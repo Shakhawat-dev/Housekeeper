@@ -32,7 +32,7 @@
 
         <activity
             android:name=".activity.SplashScreenActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/AppCustomTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,10 +41,10 @@
         </activity>
         <activity
             android:name=".activity.MobileCodeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppCustomTheme" />
         <activity
             android:name=".activity.GetNumberActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppCustomTheme" />
         <activity
             android:name=".activity.DashboardActivity"
             android:label="@string/title_activity_dashboard">

@@ -1,9 +1,14 @@
 package com.example.housekeeper.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ModelHotels {
 
+    @SerializedName("hotelCaption")
     private String hotelCaption;
+    @SerializedName("hotelId")
     private String hotelId;
+    @SerializedName("address")
     private String address;
 
     public ModelHotels() {
