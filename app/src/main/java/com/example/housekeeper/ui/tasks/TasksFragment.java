@@ -1,5 +1,6 @@
 package com.example.housekeeper.ui.tasks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.housekeeper.R;
+import com.example.housekeeper.activity.GetNumberActivity;
 import com.example.housekeeper.adapter.AdapterTasks;
 import com.example.housekeeper.api.RetrofitClient;
 import com.example.housekeeper.model.ModelTasks;
@@ -27,8 +29,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.example.housekeeper.utils.Data.TAG;
 
 public class TasksFragment extends Fragment {
 
@@ -57,7 +57,13 @@ public class TasksFragment extends Fragment {
         mHotelId = SharedPrefManager.getInstance(root.getContext()).getHotel().getHotelId();
         mCurrentDate = CustomDate.getCurrentDate();
 
-//        Log.d("Access token fragment: ", mAccessToken);
+        if (mAccessToken == null) {
+            Intent intent = new Intent(getContext(), GetNumberActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+
+        Log.d("Access token fragment: ", mAccessToken);
 //        Log.d("Hotel fragment: ", mLanguage);
 
         // Getting Task List from Api
@@ -77,10 +83,12 @@ public class TasksFragment extends Fragment {
         call.enqueue(new Callback<TaskListResponse>() {
             @Override
             public void onResponse(Call<TaskListResponse> call, Response<TaskListResponse> response) {
+
                 tasksList = response.body().getTasksList();
-                Log.d(TAG, "Tasks: " + tasksList.toString());
+//                Log.d(TAG, "Tasks: " + tasksList.toString());
                 adapter = new AdapterTasks(getActivity(), tasksList);
                 recyclerView.setAdapter(adapter);
+
             }
 
             @Override

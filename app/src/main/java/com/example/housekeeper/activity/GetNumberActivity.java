@@ -126,38 +126,41 @@ public class GetNumberActivity extends AppCompatActivity {
                             SharedPrefManager.getInstance(getApplicationContext()).userLogin(modelLogin);
 
                             for (int i = 0; i < hotellistObj.length(); i++) {
-                                    JSONObject object = hotellistObj.getJSONObject(i);
+                                JSONObject object = hotellistObj.getJSONObject(i);
 
-                                    String hoteName = object.getString("hotelCaption").trim();
-                                    String hotelAddress = object.getString("address").trim();
-                                    String hotelId = object.getString("hotelId").trim();
+                                String hoteName = object.getString("hotelCaption").trim();
+                                String hotelAddress = object.getString("address").trim();
+                                String hotelId = object.getString("hotelId").trim();
 
-                                    Log.d("hotelCaption", hoteName);
+                                Log.d("hotelCaption", hoteName);
 
-                                    ModelHotels modelHotels = new ModelHotels(hoteName, hotelAddress, hotelId);
-                                    SharedPrefManager.getInstance(mContext).hotelDetails(modelHotels);
-                                    Data.hotelsList.add(modelHotels);
-                                }
+                                ModelHotels modelHotels = new ModelHotels(hoteName, hotelAddress, hotelId);
+                                SharedPrefManager.getInstance(mContext).hotelDetails(modelHotels);
+                                Data.hotelsList.add(modelHotels);
+                            }
 
                             int organizationId = jsonObject.getInt("organizationId");
-                                int userId = jsonObject.getInt("userId");
-                                String organizationCaption = jsonObject.getString("organizationCaption");
-                                // Boolean isError = jsonObject.getBoolean("isError");
+                            int userId = jsonObject.getInt("userId");
+                            String organizationCaption = jsonObject.getString("organizationCaption");
+                            // Boolean isError = jsonObject.getBoolean("isError");
 
-                                Intent intent = new Intent(GetNumberActivity.this, MobileCodeActivity.class);
-                                intent.putExtra("Verification Code", verificationCode);
-                                intent.putExtra("Access Token", accessToken);
-                                intent.putExtra("Mobile NO", fullPhoneNo);
-                                intent.putExtra("Organization ID", organizationId);
-                                intent.putExtra("User ID", userId);
-                                intent.putExtra("Organization Caption", organizationCaption);
-                                intent.putExtra("Is Error", isError);
+                            Intent intent = new Intent(GetNumberActivity.this, MobileCodeActivity.class);
+                            intent.putExtra("Verification Code", verificationCode);
+                            intent.putExtra("Access Token", accessToken);
+                            intent.putExtra("Mobile NO", fullPhoneNo);
+                            intent.putExtra("Organization ID", organizationId);
+                            intent.putExtra("User ID", userId);
+                            intent.putExtra("Organization Caption", organizationCaption);
+                            intent.putExtra("Is Error", isError);
 
-                                // Putting phone and language into sharedpreferense
-                                ModelPhoneLanguage modelPhoneLanguage = new ModelPhoneLanguage(fullPhoneNo, language);
+                            // Putting phone and language into sharedpreferense
+                            ModelPhoneLanguage modelPhoneLanguage = new ModelPhoneLanguage(fullPhoneNo, language);
                             SharedPrefManager.getInstance(mContext).phoneAndLanguage(modelPhoneLanguage);
-                                startActivity(intent);
-                                finish();
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            String message = jsonObject.getString("message");
+                            Toast.makeText(GetNumberActivity.this, message, Toast.LENGTH_LONG).show();
                         }
 
                     } catch (JSONException e) {

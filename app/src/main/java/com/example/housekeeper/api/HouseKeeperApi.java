@@ -2,6 +2,7 @@ package com.example.housekeeper.api;
 
 import com.example.housekeeper.model.CheckedListResponse;
 import com.example.housekeeper.model.ChecklistTypeResponse;
+import com.example.housekeeper.model.StatusResponse;
 import com.example.housekeeper.model.TaskListResponse;
 
 import okhttp3.ResponseBody;
@@ -24,6 +25,27 @@ public interface HouseKeeperApi {
     @FormUrlEncoded
     @POST("tasklist")
     Call<TaskListResponse> getTaskLists(
+            @Field("phoneNumber") String phoneNumber,
+            @Field("language") String language,
+            @Field("authToken") String authToken,
+            @Field("currentDate") String currentDate,
+            @Field("hotelId") String hotelId
+    );
+
+    @FormUrlEncoded
+    @POST("statusUpdate")
+    Call<ResponseBody> updateTaskDetails(
+            @Field("phoneNumber") String phoneNumber,
+            @Field("language") String language,
+            @Field("authToken") String authToken,
+            @Field("progressStatusKey") String spinnerSelected,
+            @Field("taskId") String taskId,
+            @Field("remark") String hotelId
+    );
+
+    @FormUrlEncoded
+    @POST("progressStatusList")
+    Call<StatusResponse> getStatusList(
             @Field("phoneNumber") String phoneNumber,
             @Field("language") String language,
             @Field("authToken") String authToken,

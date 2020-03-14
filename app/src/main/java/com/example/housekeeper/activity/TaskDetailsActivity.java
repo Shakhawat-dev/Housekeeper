@@ -14,33 +14,39 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.example.housekeeper.R;
-import com.example.housekeeper.api.URLs;
-import com.example.housekeeper.api.VolleySingleton;
+import com.example.housekeeper.api.RetrofitClient;
+import com.example.housekeeper.model.ProgressStatusList;
+import com.example.housekeeper.model.StatusResponse;
 import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
+import com.example.housekeeper.utils.CustomDate;
 import com.example.housekeeper.utils.Data;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TaskDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private String[] categories = {"Void", "InProgress", "Completed"};
     private String spinnerSelected;
     private String remarkTxt;
+    private String taskId;
+    private List<ProgressStatusList> statusLists = new ArrayList<>();
 
     private Spinner spinner;
     private ArrayAdapter aa;
     private TextView taskTitle, taskStatus, taskRoom, taskDate;
     private EditText remarkEd;
     private Button updateBtn;
-    private String mAccessToken, mPhoneNo, mLanguage, taskId;
+    private String mAccessToken, mPhoneNo, mLanguage, mCurrentDate, mHotelId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +56,6 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         uiInitialization();
-        setSpinner();
 
         if (Data.task != null) {
             setData();
@@ -67,7 +72,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
         updateBtn = findViewById(R.id.update_btn);
         remarkEd = findViewById(R.id.remark_ed);
 
-        spinner.setOnItemSelectedListener(this);
+//        spinner.setOnItemSelectedListener(this);
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,10 +80,14 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
+        taskId = Data.task.getId().toString();
         mAccessToken = SharedPrefManager.getInstance(this).getLogin().getAccessToken();
         mPhoneNo = SharedPrefManager.getInstance(this).getPhoneAndLanguage().getPhone();
         mLanguage = SharedPrefManager.getInstance(this).getPhoneAndLanguage().getLanguage();
-        taskId = Data.task.getId().toString();
+        mHotelId = SharedPrefManager.getInstance(this).getHotel().getHotelId();
+        mCurrentDate = CustomDate.getCurrentDate();
+
+        setSpinner();
     }
 
     private void setData() {
@@ -90,17 +99,42 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
 
     private void setSpinner() {
 
-        aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(aa);
+        Call<StatusResponse> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .getStatusList(mPhoneNo, mLanguage, mAccessToken, mCurrentDate, mHotelId);
 
-        if (Data.task.getStatus().equals("Completed")) {
-            spinner.setSelection(2);
-        } else if (Data.task.getStatus().equals("In Progress")) {
-            spinner.setSelection(1);
-        } else {
-            spinner.setSelection(0);
-        }
+        call.enqueue(new Callback<StatusResponse>() {
+            @Override
+            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                if (response != null && response.isSuccessful() && response.body() != null) {
+                    // show message
+                    String s = response.body().getProgressStatusList().toString();
+                    Log.d(Data.TAG, "onResponse: " + s);
+                    statusLists = response.body().getProgressStatusList();
+                    aa = new ArrayAdapter(TaskDetailsActivity.this, android.R.layout.simple_spinner_dropdown_item, statusLists);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setOnItemSelectedListener(TaskDetailsActivity.this);
+                    spinner.setAdapter(aa);
+                } else {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<StatusResponse> call, Throwable t) {
+                Log.d(Data.TAG, "onResponse: " + t.getMessage());
+            }
+        });
+
+//        if (Data.task.getStatus().equals("Completed")) {
+//            spinner.setSelection(2);
+//        } else if (Data.task.getStatus().equals("In Progress")) {
+//            spinner.setSelection(1);
+//        } else {
+//            spinner.setSelection(0);
+//        }
     }
 
     @Override
@@ -120,51 +154,95 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
     private void updateTaskStatus() {
         remarkTxt = remarkEd.getText().toString().trim();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_TASK_UPDATE, new Response.Listener<String>() {
+        Call<ResponseBody> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .updateTaskDetails(mPhoneNo, mLanguage, mAccessToken, spinnerSelected, taskId, remarkTxt);
+
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(String response) {
-                Log.d(Data.TAG, "Task Update RESPONSE: " + response);
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s = null;
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    Boolean isError = jsonObject.getBoolean("isError");
-                    String message = jsonObject.getString("message");
-
-                    if (!isError) {
-                        Toast.makeText(TaskDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(TaskDetailsActivity.this, DashboardActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(TaskDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (JSONException e) {
+                    s = response.body().string();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
+                if (s != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        Boolean isError = jsonObject.getBoolean("isError");
+                        String message = jsonObject.getString("message");
+
+                        if (isError == false) {
+                            Toast.makeText(TaskDetailsActivity.this, message, Toast.LENGTH_LONG).show();
+
+                            Intent intent = new Intent(TaskDetailsActivity.this, DashboardActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(TaskDetailsActivity.this, message, Toast.LENGTH_LONG).show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError error) {
-
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(TaskDetailsActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.d(Data.TAG, "onFailure: " + t);
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
+        });
 
-                Map<String, String> params = new HashMap<>();
-                params.put("phoneNumber", mPhoneNo);
-                params.put("language", mLanguage);
-                params.put("authToken", mAccessToken);
-                params.put("progressStatusKey", spinnerSelected);
-                params.put("taskId", taskId);
-                params.put("remark", remarkTxt);
-                Log.i(Data.TAG, params.toString());
-
-                return params;
-            }
-        };
-
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_TASK_UPDATE, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                Log.d(Data.TAG, "Task Update RESPONSE: " + response);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    Boolean isError = jsonObject.getBoolean("isError");
+//                    String message = jsonObject.getString("message");
+//
+//                    if (!isError) {
+//                        Toast.makeText(TaskDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(TaskDetailsActivity.this, DashboardActivity.class);
+//                        startActivity(intent);
+//                        finish();
+//                    } else {
+//                        Toast.makeText(TaskDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//
+//                Map<String, String> params = new HashMap<>();
+//                params.put("phoneNumber", mPhoneNo);
+//                params.put("language", mLanguage);
+//                params.put("authToken", mAccessToken);
+//                params.put("progressStatusKey", spinnerSelected);
+//                params.put("taskId", taskId);
+//                params.put("remark", remarkTxt);
+//                Log.i(Data.TAG, params.toString());
+//
+//                return params;
+//            }
+//        };
+//
+//        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
 
