@@ -1,12 +1,21 @@
 package com.example.housekeeper.model;
 
-public class ModelTasks {
+import androidx.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
+public class ModelTasks {
+    @SerializedName("id")
     private Integer id;
+    @SerializedName("taskCaption")
     private String title;
+    @SerializedName("progressStatusKey")
     private String status;
+    @SerializedName("roomCaption")
     private String room;
+    @SerializedName("toDate")
     private String date;
+    @SerializedName("priorityRating")
     private Integer priorityRating;
 
     public ModelTasks() {
@@ -67,5 +76,11 @@ public class ModelTasks {
 
     public void setPriorityRating(Integer priorityRating) {
         this.priorityRating = priorityRating;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return title;
     }
 }

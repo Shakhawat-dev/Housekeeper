@@ -155,6 +155,7 @@ public class GetNumberActivity extends AppCompatActivity {
 
                                 // Putting phone and language into sharedpreferense
                                 ModelPhoneLanguage modelPhoneLanguage = new ModelPhoneLanguage(fullPhoneNo, language);
+                            SharedPrefManager.getInstance(mContext).phoneAndLanguage(modelPhoneLanguage);
                                 startActivity(intent);
                                 finish();
                         }
