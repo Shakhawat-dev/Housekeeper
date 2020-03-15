@@ -200,52 +200,6 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_TASK_UPDATE, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.d(Data.TAG, "Task Update RESPONSE: " + response);
-//                try {
-//                    JSONObject jsonObject = new JSONObject(response);
-//                    Boolean isError = jsonObject.getBoolean("isError");
-//                    String message = jsonObject.getString("message");
-//
-//                    if (!isError) {
-//                        Toast.makeText(TaskDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(TaskDetailsActivity.this, DashboardActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    } else {
-//                        Toast.makeText(TaskDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() {
-//
-//                Map<String, String> params = new HashMap<>();
-//                params.put("phoneNumber", mPhoneNo);
-//                params.put("language", mLanguage);
-//                params.put("authToken", mAccessToken);
-//                params.put("progressStatusKey", spinnerSelected);
-//                params.put("taskId", taskId);
-//                params.put("remark", remarkTxt);
-//                Log.i(Data.TAG, params.toString());
-//
-//                return params;
-//            }
-//        };
-//
-//        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
     }
 
 

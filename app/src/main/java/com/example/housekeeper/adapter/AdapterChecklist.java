@@ -40,12 +40,9 @@ public class AdapterChecklist extends RecyclerView.Adapter<AdapterChecklist.View
     @Override
     public void onBindViewHolder(@NonNull final AdapterChecklist.ViewHolder holder, final int position) {
         checklist = modelChecklists.get(position);
-
         holder.checkListName.setText(checklist.getCaption());
         holder.checkListName.setChecked(checklist.getTaskStatus());
-
     }
-
 
     @Override
     public int getItemCount() {
@@ -58,7 +55,6 @@ public class AdapterChecklist extends RecyclerView.Adapter<AdapterChecklist.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-
             checkListName = itemView.findViewById(R.id.checklist_item_ctv);
             checkListName.setOnClickListener(this);
         }
@@ -66,7 +62,6 @@ public class AdapterChecklist extends RecyclerView.Adapter<AdapterChecklist.View
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-
             modelChecklists.get(position).setTaskStatus(checkListName.isChecked());
             Log.d(TAG, "onClick: " + modelChecklists.get(position).getCaption() + "is " + modelChecklists.get(position).getTaskStatus());
         }

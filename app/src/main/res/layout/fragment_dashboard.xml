@@ -21,11 +21,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="2"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/rooms_card"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
                     android:layout_weight="1"
@@ -59,7 +60,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/task_card"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
                     android:layout_weight="1"
@@ -96,11 +97,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="2"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/hotels_card"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
                     android:layout_weight="1"
@@ -136,7 +138,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
                     android:layout_weight="1"
@@ -178,7 +180,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/checklist_card"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
                     android:layout_weight="1"
@@ -211,7 +213,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
                     android:layout_weight="1"
@@ -270,14 +272,14 @@
                             android:layout_height="@dimen/home_menu_icon_size"
                             android:layout_gravity="center"
                             android:tint="@color/colorWhite"
-                            app:srcCompat="@drawable/ic_list_black_24dp" />
+                            app:srcCompat="@drawable/ic_assignment_late_black_24dp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/padding_margin_10dp"
                             android:gravity="center"
-                            android:text="Checklists"
+                            android:text="Defects"
                             android:textColor="@color/colorWhite"
                             android:textSize="16sp" />
 

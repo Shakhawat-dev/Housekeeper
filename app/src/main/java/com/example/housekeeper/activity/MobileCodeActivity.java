@@ -30,7 +30,6 @@ public class MobileCodeActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-
             mVerificationCode = extras.getString("Verification Code");
             mToken = extras.getString("Access Token");
             mPhoneNo = extras.getString("Mobile NO");
@@ -52,9 +51,7 @@ public class MobileCodeActivity extends AppCompatActivity {
                     finish();
 
                 } else {
-
                     Toast.makeText(MobileCodeActivity.this, "Enter Valid Verification code!", Toast.LENGTH_LONG).show();
-
                 }
             }
         });

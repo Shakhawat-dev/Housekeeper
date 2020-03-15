@@ -79,17 +79,13 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
 
         @Override
         public void onClick(View v) {
-
             int position = getAdapterPosition();
-
             ModelTasks task = modelTasksList.get(position);
             Data.task = task;
             Intent intent = new Intent(ctx, TaskDetailsActivity.class);
 
             ctx.startActivity(intent);
             //  ((Activity)ctx).finish();
-
-
         }
     }
 }

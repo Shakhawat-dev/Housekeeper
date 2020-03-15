@@ -88,7 +88,6 @@ public class TasksFragment extends Fragment {
 //                Log.d(TAG, "Tasks: " + tasksList.toString());
                 adapter = new AdapterTasks(getActivity(), tasksList);
                 recyclerView.setAdapter(adapter);
-
             }
 
             @Override
@@ -97,77 +96,6 @@ public class TasksFragment extends Fragment {
             }
         });
 
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_TASKS, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.d(Data.TAG, "Task RESPONSE:" + response);
-//
-//                try {
-//                    JSONObject jsonObject = new JSONObject(response);
-//
-//
-////                    if (isError.equals(false)) {
-//                    //Todo: I'll use this method later...
-//                    JSONArray tasklistObj = jsonObject.getJSONArray("taskList");
-//
-//                    for (int i = 0; i < tasklistObj.length(); i++) {
-//                        JSONObject object = tasklistObj.getJSONObject(i);
-//
-//                        Integer id = object.getInt("id");
-//                        String taskCaption = object.getString("taskCaption").trim();
-//                        String progressStatusKey = object.getString("progressStatusKey").trim();
-//                        String roomCaption = object.getString("roomCaption").trim();
-//                        String fromDate = object.getString("fromDate").trim();
-//                        Integer priorityRating = object.getInt("priorityRating");
-//
-//                        Log.d("taskCaption", taskCaption);
-//
-//                        ModelTasks modelTasks = new ModelTasks(id, taskCaption, progressStatusKey, roomCaption, fromDate, priorityRating);
-//                        tasksList.add(modelTasks);
-//                    }
-//
-//
-//                    adapter = new AdapterTasks(getActivity(), tasksList);
-//                    recyclerView.setAdapter(adapter);
-////                    } else {
-////                        Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-////                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//
-//                    Toast.makeText(getActivity(), "error number 1" + " " + e.toString(), Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//                Toast.makeText(getContext(), "error number 2" + " " + error.toString(), Toast.LENGTH_SHORT).show();
-//
-//
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Log.d(Data.TAG, "Language: " + mLanguage);
-//                Map<String, String> params = new HashMap<>();
-//                params.put("phoneNumber", mPhoneNo);
-//                params.put("language", mLanguage);
-//                params.put("authToken", mAccessToken);
-//                params.put("currentDate", CustomDate.getCurrentDate());
-//                params.put("hotelId", mHotelId);
-//                Log.i(Data.TAG, params.toString());
-//                return params;
-//            }
-//
-//        };
-//
-//        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-
-
     }
-
 
 }

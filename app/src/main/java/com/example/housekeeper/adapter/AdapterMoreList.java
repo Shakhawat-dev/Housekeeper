@@ -35,7 +35,6 @@ public class AdapterMoreList extends RecyclerView.Adapter<AdapterMoreList.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_more_list, parent, false);
 
@@ -44,11 +43,8 @@ public class AdapterMoreList extends RecyclerView.Adapter<AdapterMoreList.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         ModelMoreList moreList = modelMoreList.get(position);
-
         holder.name.setText(moreList.getName());
-
     }
 
     @Override
@@ -57,27 +53,22 @@ public class AdapterMoreList extends RecyclerView.Adapter<AdapterMoreList.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         public TextView name;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             itemView.setOnClickListener(this);
-
             name = itemView.findViewById(R.id.list_title);
-
         }
 
         @Override
         public void onClick(View v) {
 
             int position = getAdapterPosition();
-
             ModelMoreList moreList = modelMoreList.get(position);
 
             if (moreList.getName().equals("Sign Out")) {
-
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -101,14 +92,8 @@ public class AdapterMoreList extends RecyclerView.Adapter<AdapterMoreList.ViewHo
                 AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
                 builder.setMessage("Are you sure want to sign out?").setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
-
 //                Toast.makeText(v.getContext(), "Sign Out Tapped", Toast.LENGTH_LONG).show();
-
-
-
             }
-
-
         }
     }
 }

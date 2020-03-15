@@ -62,8 +62,6 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        fragmentManager = getSupportFragmentManager();
 
-//        fragmentManager = getSupportFragmentManager();
-
 //        if (findViewById(R.id.fragment_container_framelayout) != null) {
 //            if (savedInstanceState != null) {
 //                return;
@@ -146,48 +144,7 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
             }
         });
 
-//        String url = URLs.URL_CHECKED_LISTS + "?organizationId=" + mHotelId + "&locationType=" + checklistType + "&lang=" + mLanguage;
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.d(Data.TAG, "Checked Lists: " + response);
-//
-//                try {
-//
-//                    JSONObject jsonObject = new JSONObject(response);
-//                    JSONArray checkedListsObjArray = jsonObject.getJSONArray("checkListList");
-//
-//                    // Clearing previous data to prevent overlap
-//                    checklists.clear();
-//                    for (int i = 0; i < checkedListsObjArray.length(); i++) {
-//                        JSONObject object = checkedListsObjArray.getJSONObject(i);
-//
-//                        ModelChecklist checklist = new ModelChecklist(
-//                                object.getInt("id"),
-//                                object.getString("caption"),
-//                                object.getString("checkListType"),
-//                                object.getBoolean("taskStatus")
-//                        );
-//
-//                        checklists.add(checklist);
-//                    }
-//
-//                    recyclerViewAdapter.notifyDataSetChanged();
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(ChecklistActivity.this, "error number 1" + " " + e.toString(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(ChecklistActivity.this, "error number 2" + " " + error.toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
     }
 
     @Override
@@ -203,14 +160,6 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
 //        Bundle data = new Bundle();//Use bundle to pass data
 //        data.putString("checklist_type", item);//put string, int, etc in bundle with a key value
 //        roomChecklistFragment.setArguments(data);//Finally s
-
-//        checklists.clear();
-//        for (int i = 0; i < 10; i++) {
-//            checklists.add(new ModelChecklist(item + i, false));
-//        }
-
-//        recyclerViewAdapter.notifyDataSetChanged();
-
 
         // For Multiple Fragments
 //        if (findViewById(R.id.fragment_container_framelayout) != null) {
@@ -236,19 +185,3 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
     }
 }
 
-
-// If I need that in future
-//        JSONObject jsonObject = new JSONObject(s);
-//        JSONArray checkListTypeObj = jsonObject.getJSONArray("checkListType");
-//
-//        for (int i = 0; i < checkListTypeObj.length(); i++) {
-//        JSONObject object = checkListTypeObj.getJSONObject(i);
-//
-//        String optionKey = object.getString("optionKey").trim();
-//        String optionValue = object.getString("optionValue").trim();
-//
-//        ModelChecklistType checklistType = new ModelChecklistType(optionKey, optionValue);
-//        checklistTypes.add(checklistType);
-//        // Call Spinner Adapter
-//        spinner.setAdapter(spinnerAdapter);
-// Log.d( Data.TAG, "Response: " + checklistTypes.toString());

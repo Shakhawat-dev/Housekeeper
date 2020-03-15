@@ -13,12 +13,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.housekeeper.R;
 import com.example.housekeeper.activity.ChecklistActivity;
+import com.example.housekeeper.activity.DefectActivity;
 import com.example.housekeeper.activity.TaskListActivity;
 
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
-    private CardView mRooms, mTasks, mHotels, mChecklists;
+    private CardView mRooms, mTasks, mHotels, mChecklists, mDefects;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -31,6 +32,7 @@ public class DashboardFragment extends Fragment {
         mTasks = root.findViewById(R.id.task_card);
         mHotels = root.findViewById(R.id.hotels_card);
         mChecklists = root.findViewById(R.id.checklist_card);
+        mDefects = root.findViewById(R.id.defects_card);
 
 //        final TextView textView = root.findViewById(R.id.text_dashboard);
 //        dashboardViewModel.getText().observe(this, new Observer<String>() {
@@ -53,6 +55,14 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChecklistActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mDefects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DefectActivity.class);
                 startActivity(intent);
             }
         });

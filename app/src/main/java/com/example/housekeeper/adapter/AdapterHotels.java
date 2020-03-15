@@ -25,16 +25,13 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
     private List<ModelHotels> modelHotelsList;
 
     public AdapterHotels(Context context, List hotelList) {
-
         this.ctx = context;
         this.modelHotelsList = hotelList;
-
     }
 
     @NonNull
     @Override
     public AdapterHotels.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_hotels, parent, false);
 
@@ -43,10 +40,9 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull AdapterHotels.ViewHolder holder, int position) {
-
         ModelHotels hotels = modelHotelsList.get(position);
-
         holder.name.setText(hotels.getName());
+
         if (!hotels.getAddress().equals("null")) {
             holder.layoutAddress.setVisibility(View.VISIBLE);
             holder.address.setText(hotels.getAddress());
@@ -55,7 +51,6 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
         }
 
         holder.hotelId.setText(hotels.getHotelId());
-
     }
 
     @Override
@@ -64,7 +59,6 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         public TextView name;
         public TextView address;
         public TextView hotelId;
@@ -85,11 +79,9 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
         public void onClick(View v) {
 
             int position = getAdapterPosition();
-
             ModelHotels hotelsList = modelHotelsList.get(position);
 
             Intent intent = new Intent(ctx, DashboardActivity.class);
-
             intent.putExtra("Name", hotelsList.getName());
             intent.putExtra("Address", hotelsList.getAddress());
             intent.putExtra("Hotel ID", hotelsList.getAddress());
@@ -105,8 +97,6 @@ public class AdapterHotels extends RecyclerView.Adapter<AdapterHotels.ViewHolder
 
             ctx.startActivity(intent);
             ((Activity) ctx).finish();
-
-
         }
     }
 }
