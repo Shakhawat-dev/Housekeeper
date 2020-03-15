@@ -35,7 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TaskDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-    private String[] categories = {"Void", "InProgress", "Completed"};
+    //    private String[] categories = {"Void", "InProgress", "Completed"};
     private String spinnerSelected;
     private String remarkTxt;
     private String taskId;
@@ -52,15 +52,14 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_details);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         uiInitialization();
+        setSpinner();
 
         if (Data.task != null) {
             setData();
         }
-
     }
 
     private void uiInitialization() {
@@ -86,8 +85,6 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
         mLanguage = SharedPrefManager.getInstance(this).getPhoneAndLanguage().getLanguage();
         mHotelId = SharedPrefManager.getInstance(this).getHotel().getHotelId();
         mCurrentDate = CustomDate.getCurrentDate();
-
-        setSpinner();
     }
 
     private void setData() {

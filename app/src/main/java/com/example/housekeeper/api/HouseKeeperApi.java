@@ -64,4 +64,19 @@ public interface HouseKeeperApi {
             @Query("locationType") String checklistType,
             @Query("lang") String language
     );
+
+    @FormUrlEncoded
+    @POST("defectsSet")
+    Call<ResponseBody> updateDefect(
+            @Field("caption") String caption,
+            @Field("housekeeper") String housekeeper,
+            @Field("checkedTime") String checkedTime,
+            @Field("priority") String priority,
+            @Field("notifyDepartment") String notifyDepartment,
+            @Field("isNotified") String isNotified,
+            @Field("organizationId") String organizationId,
+            @Field("room") String room,
+            @Field("remark") String remark,
+            @Field("lang") String lang
+    );
 }

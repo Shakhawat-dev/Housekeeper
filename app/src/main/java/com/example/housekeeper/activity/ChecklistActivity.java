@@ -17,10 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.housekeeper.R;
 import com.example.housekeeper.adapter.AdapterChecklist;
 import com.example.housekeeper.api.RetrofitClient;
+import com.example.housekeeper.custom.DefectDialog;
 import com.example.housekeeper.model.CheckedListResponse;
 import com.example.housekeeper.model.ChecklistTypeResponse;
 import com.example.housekeeper.model.ModelChecklist;
 import com.example.housekeeper.model.ModelChecklistType;
+import com.example.housekeeper.model.ModelDefectDialog;
 import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
 import com.example.housekeeper.utils.Data;
 
@@ -31,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChecklistActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ChecklistActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DefectDialog.DefectDialogTapListener {
 
     private static FragmentManager fragmentManager;
     private List<ModelChecklistType> checklistTypes = new ArrayList<>();
@@ -95,14 +97,13 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
     }
 
     public void getCheckListTypes() {
+        Log.d(Data.TAG, "Language: " + mLanguage);
 
         Call<ChecklistTypeResponse> call = RetrofitClient
                 .getInstance()
                 .getApi()
                 .getCheckListTypes(mLanguage);
 
-
-        Log.d(Data.TAG, "Language: " + mLanguage);
         call.enqueue(new Callback<ChecklistTypeResponse>() {
             @Override
             public void onResponse(Call<ChecklistTypeResponse> call, Response<ChecklistTypeResponse> response) {
@@ -182,6 +183,11 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onOkBtnTapped(ModelDefectDialog defectDialog) {
+        Log.d(Data.TAG, "onOkBtnTapped: " + defectDialog.getCaption());
     }
 }
 

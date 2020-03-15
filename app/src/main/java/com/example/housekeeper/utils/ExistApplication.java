@@ -18,8 +18,6 @@ public class ExistApplication {
                 .setPositiveButton(activity.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-
                         activity.finish();
                         activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }

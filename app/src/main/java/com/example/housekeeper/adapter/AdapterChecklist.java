@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.housekeeper.R;
+import com.example.housekeeper.activity.ChecklistActivity;
+import com.example.housekeeper.custom.DefectDialog;
 import com.example.housekeeper.model.ModelChecklist;
 
 import java.util.List;
@@ -64,6 +66,9 @@ public class AdapterChecklist extends RecyclerView.Adapter<AdapterChecklist.View
             int position = getAdapterPosition();
             modelChecklists.get(position).setTaskStatus(checkListName.isChecked());
             Log.d(TAG, "onClick: " + modelChecklists.get(position).getCaption() + "is " + modelChecklists.get(position).getTaskStatus());
+
+            DefectDialog defectDialog = new DefectDialog();
+            defectDialog.show(((ChecklistActivity) ctx).getSupportFragmentManager(), "Defect Dialog");
         }
     }
 }
