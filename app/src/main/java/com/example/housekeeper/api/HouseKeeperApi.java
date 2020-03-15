@@ -44,7 +44,7 @@ public interface HouseKeeperApi {
     );
 
     @FormUrlEncoded
-    @POST("progressStatusList")
+    @POST("initialization")
     Call<StatusResponse> getStatusList(
             @Field("phoneNumber") String phoneNumber,
             @Field("language") String language,

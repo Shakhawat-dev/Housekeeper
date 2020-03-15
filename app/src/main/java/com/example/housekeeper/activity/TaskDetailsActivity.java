@@ -116,6 +116,14 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
                     aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setOnItemSelectedListener(TaskDetailsActivity.this);
                     spinner.setAdapter(aa);
+
+                    if (Data.task.getStatus().equals("Completed")) {
+                        spinner.setSelection(2);
+                    } else if (Data.task.getStatus().equals("InPrgress")) {
+                        spinner.setSelection(1);
+                    } else {
+                        spinner.setSelection(0);
+                    }
                 } else {
 
                 }
@@ -128,13 +136,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-//        if (Data.task.getStatus().equals("Completed")) {
-//            spinner.setSelection(2);
-//        } else if (Data.task.getStatus().equals("In Progress")) {
-//            spinner.setSelection(1);
-//        } else {
-//            spinner.setSelection(0);
-//        }
+
     }
 
     @Override
