@@ -46,11 +46,6 @@ public class TasksFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_tasks, container, false);
 
-        recyclerView = root.findViewById(R.id.task_recyclerview);
-        recyclerView.setHasFixedSize(true);
-
-        linearLayoutManager = new LinearLayoutManager(getContext());
-
         mAccessToken = SharedPrefManager.getInstance(root.getContext()).getLogin().getAccessToken();
         mPhoneNo = SharedPrefManager.getInstance(root.getContext()).getPhoneAndLanguage().getPhone();
         mLanguage = SharedPrefManager.getInstance(root.getContext()).getPhoneAndLanguage().getLanguage();
@@ -68,6 +63,9 @@ public class TasksFragment extends Fragment {
 
         // Getting Task List from Api
         loadTasks();
+        recyclerView = root.findViewById(R.id.task_recyclerview);
+        recyclerView.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         return root;
@@ -83,11 +81,18 @@ public class TasksFragment extends Fragment {
         call.enqueue(new Callback<TaskListResponse>() {
             @Override
             public void onResponse(Call<TaskListResponse> call, Response<TaskListResponse> response) {
-
-                tasksList = response.body().getTasksList();
+                if (response != null && response.isSuccessful() && response.body() != null) {
+                    tasksList = response.body().getTasksList();
 //                Log.d(TAG, "Tasks: " + tasksList.toString());
-                adapter = new AdapterTasks(getActivity(), tasksList);
-                recyclerView.setAdapter(adapter);
+                    adapter = new AdapterTasks(getActivity(), tasksList);
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    SharedPrefManager.getInstance(getContext()).logout();
+                    Intent intent = new Intent(getContext(), GetNumberActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+
             }
 
             @Override

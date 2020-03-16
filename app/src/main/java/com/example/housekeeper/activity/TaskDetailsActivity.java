@@ -92,6 +92,14 @@ public class TaskDetailsActivity extends AppCompatActivity implements AdapterVie
         taskStatus.setText(Data.task.getStatus());
         taskRoom.setText(Data.task.getRoom());
         taskDate.setText(Data.task.getDate());
+
+        if (Data.task.getStatus().equals("Completed")) {
+            taskStatus.setBackgroundResource(R.drawable.text_back_green);
+        } else if (Data.task.getStatus().equals("InPrgress")) {
+            taskStatus.setBackgroundResource(R.drawable.text_back_yellow);
+        } else {
+            taskStatus.setBackgroundResource(R.drawable.text_back_red);
+        }
     }
 
     private void setSpinner() {

@@ -69,13 +69,13 @@ public interface HouseKeeperApi {
     @POST("defectsSet")
     Call<ResponseBody> updateDefect(
             @Field("caption") String caption,
-            @Field("housekeeper") String housekeeper,
+            @Field("housekeeper") Integer housekeeper,
             @Field("checkedTime") String checkedTime,
-            @Field("priority") String priority,
+            @Field("priority") Integer priority,
             @Field("notifyDepartment") String notifyDepartment,
-            @Field("isNotified") String isNotified,
+            @Field("isNotified") Boolean isNotified,
             @Field("organizationId") String organizationId,
-            @Field("room") String room,
+            @Field("room") Integer room,
             @Field("remark") String remark,
             @Field("lang") String lang
     );

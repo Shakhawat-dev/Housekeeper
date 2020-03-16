@@ -67,8 +67,11 @@ public class AdapterChecklist extends RecyclerView.Adapter<AdapterChecklist.View
             modelChecklists.get(position).setTaskStatus(checkListName.isChecked());
             Log.d(TAG, "onClick: " + modelChecklists.get(position).getCaption() + "is " + modelChecklists.get(position).getTaskStatus());
 
-            DefectDialog defectDialog = new DefectDialog();
-            defectDialog.show(((ChecklistActivity) ctx).getSupportFragmentManager(), "Defect Dialog");
+            if (checkListName.isChecked()) {
+                DefectDialog defectDialog = new DefectDialog();
+                defectDialog.show(((ChecklistActivity) ctx).getSupportFragmentManager(), "Defect Dialog");
+            }
+
         }
     }
 }

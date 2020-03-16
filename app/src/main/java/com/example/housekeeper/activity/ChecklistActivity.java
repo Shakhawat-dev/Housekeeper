@@ -26,9 +26,14 @@ import com.example.housekeeper.model.ModelDefectDialog;
 import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
 import com.example.housekeeper.utils.Data;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,7 +45,7 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
     private Spinner spinner;
     private ArrayAdapter<ModelChecklistType> spinnerAdapter;
     private String mAccessToken, mPhoneNo, mLanguage, mCurrentDate, mHotelId;
-
+    private Integer mUserId;
     private RecyclerView roomRecyclerVIew;
     private Button updateBtn;
     private RecyclerView.Adapter recyclerViewAdapter;
@@ -54,6 +59,7 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
         setContentView(R.layout.activity_checklist);
 
         mAccessToken = SharedPrefManager.getInstance(this).getLogin().getAccessToken();
+        mUserId = SharedPrefManager.getInstance(this).getLogin().getUserId();
         mPhoneNo = SharedPrefManager.getInstance(this).getPhoneAndLanguage().getPhone();
         mLanguage = SharedPrefManager.getInstance(this).getPhoneAndLanguage().getLanguage();
         mHotelId = SharedPrefManager.getInstance(this).getHotel().getHotelId();
@@ -187,7 +193,64 @@ public class ChecklistActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onOkBtnTapped(ModelDefectDialog defectDialog) {
+        String[] categories = {"FrontOffice", "ManagementDepartment"};
         Log.d(Data.TAG, "onOkBtnTapped: " + defectDialog.getCaption());
+        Log.d(Data.TAG, "onOkBtnTapped: " + defectDialog.getNotifyDepartment());
+        Log.d(Data.TAG, "onOkBtnTapped: " + defectDialog.getNotified());
+        Log.d(Data.TAG, "onOkBtnTapped: " + defectDialog.getRemark());
+        Log.d(Data.TAG, "onOkBtnTapped: " + defectDialog.getPriority());
+        Log.d(Data.TAG, "onOkBtnTapped: " + defectDialog.getCurrentTime());
+
+        Call<ResponseBody> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .updateDefect(
+                        defectDialog.getCaption(),
+                        mUserId,
+                        defectDialog.getCurrentTime(),
+                        defectDialog.getPriority(),
+                        categories[defectDialog.getNotifyDepartment()],
+                        defectDialog.getNotified(),
+                        mHotelId,
+                        2,
+                        defectDialog.getRemark(),
+                        mLanguage);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String s = null;
+
+                try {
+                    s = response.body().string();
+//                    Toast.makeText(GetNumberActivity.this, s, Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (s != null) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        Boolean isError = jsonObject.getBoolean("isError");
+                        String message = jsonObject.getString("message");
+
+                        if (!isError) {
+                            Toast.makeText(ChecklistActivity.this, message, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(ChecklistActivity.this, message, Toast.LENGTH_LONG).show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }
 

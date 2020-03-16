@@ -7,6 +7,10 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBackground">#E4E6EA</color>
     <color name="gray">#9B9797</color>
     <color name="cardGreen">#26A69A</color>
+    <color name="backGreen">#27AE5F</color>
+    <color name="backYellow">#FFAB00</color>
+    <color name="backRed">#D50000</color>
 </resources>

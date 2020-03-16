@@ -17,5 +17,12 @@
     <string name="no">No</string>
     <string name="sign_out_message">Are you sure you want to Sign Out?</string>
     <string name="exit_from_application">Do you want to close this application?</string>
+    <string name="task_title">Task Title</string>
+    <string name="date">Date :</string>
+    <string name="room">Room :</string>
+    <string name="set_status">Set Status :</string>
+    <string name="enter_your_message_here">Enter Your message here...</string>
+    <string name="remark">Remark</string>
+    <string name="update">Update</string>
 
 </resources>

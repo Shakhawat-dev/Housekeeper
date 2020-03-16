@@ -19,6 +19,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="task_title">Task Title</string>
+    <string name="date">Date :</string>
+    <string name="room">Room :</string>
+    <string name="set_status">Set Status :</string>
+    <string name="enter_your_message_here">Enter Your message here...</string>
+    <string name="remark">Remark</string>
+    <string name="update">Update</string>
 
     <string-array name="departments">
         <item>Front Department</item>

@@ -2,20 +2,22 @@ package com.example.housekeeper.model;
 
 public class ModelDefectDialog {
     private String caption;
-    private String notifyDepartment;
+    private Integer notifyDepartment;
     private Boolean isNotified;
     private Integer priority;
     private String remark;
+    private String currentTime;
 
     public ModelDefectDialog() {
     }
 
-    public ModelDefectDialog(String caption, String notifyDepartment, Boolean isNotified, Integer priority, String remark) {
+    public ModelDefectDialog(String caption, Integer notifyDepartment, Boolean isNotified, Integer priority, String remark, String currentTime) {
         this.caption = caption;
         this.notifyDepartment = notifyDepartment;
         this.isNotified = isNotified;
         this.priority = priority;
         this.remark = remark;
+        this.currentTime = currentTime;
     }
 
     public String getCaption() {
@@ -26,11 +28,11 @@ public class ModelDefectDialog {
         this.caption = caption;
     }
 
-    public String getNotifyDepartment() {
+    public Integer getNotifyDepartment() {
         return notifyDepartment;
     }
 
-    public void setNotifyDepartment(String notifyDepartment) {
+    public void setNotifyDepartment(Integer notifyDepartment) {
         this.notifyDepartment = notifyDepartment;
     }
 
@@ -56,5 +58,13 @@ public class ModelDefectDialog {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(String currentTime) {
+        this.currentTime = currentTime;
     }
 }

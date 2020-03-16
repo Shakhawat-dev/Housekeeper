@@ -19,5 +19,12 @@
     <string name="no">لا</string>
     <string name="sign_out_message">هل أنت متأكد من تسجيل خروجك ؟</string>
     <string name="exit_from_application">هل تريد اغلاق التطبيق ؟ </string>
+    <string name="task_title">عنوان المهمة</string>
+    <string name="date">تاريخ : </string>
+    <string name="room">غرفة : </string>
+    <string name="set_status">تعيين الحالة : </string>
+    <string name="enter_your_message_here">أدخل رسالتك هنا...</string>
+    <string name="remark">ملاحظة</string>
+    <string name="update">تحديث</string>
 
 </resources>

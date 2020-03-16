@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -49,6 +50,20 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
         holder.date.setText(tasks.getDate());
         holder.priorityRating.setRating(tasks.getPriorityRating());
 
+        if (tasks.getStatus().equals("Completed")) {
+            holder.mTaskImage.setImageResource(R.drawable.complete_icon);
+            holder.mTaskImage.setBackgroundResource(R.drawable.shape_round_green);
+            holder.status.setBackgroundResource(R.drawable.text_back_green);
+        } else if (tasks.getStatus().equals("InPrgress")) {
+            holder.mTaskImage.setImageResource(R.drawable.progress_icon);
+            holder.mTaskImage.setBackgroundResource(R.drawable.shape_round_yellow);
+            holder.status.setBackgroundResource(R.drawable.text_back_yellow);
+        } else {
+            holder.mTaskImage.setImageResource(R.drawable.void_icon);
+            holder.mTaskImage.setBackgroundResource(R.drawable.shape_round_red);
+            holder.status.setBackgroundResource(R.drawable.text_back_red);
+        }
+
     }
 
     @Override
@@ -58,6 +73,7 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        public ImageView mTaskImage;
         public TextView title;
         public TextView status;
         public TextView room;
@@ -69,6 +85,7 @@ public class AdapterTasks extends RecyclerView.Adapter<AdapterTasks.ViewHolder> 
 
             itemView.setOnClickListener(this);
 
+            mTaskImage = itemView.findViewById(R.id.task_status_image);
             title = itemView.findViewById(R.id.title_tv);
             status = itemView.findViewById(R.id.status_tv);
             room = itemView.findViewById(R.id.room_no_tv);

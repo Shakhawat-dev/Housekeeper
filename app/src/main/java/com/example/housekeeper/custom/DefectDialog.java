@@ -19,6 +19,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.housekeeper.R;
 import com.example.housekeeper.model.ModelDefectDialog;
+import com.example.housekeeper.utils.CustomDate;
 
 public class DefectDialog extends DialogFragment {
 
@@ -46,10 +47,11 @@ public class DefectDialog extends DialogFragment {
 
                 defectDialog = new ModelDefectDialog(
                         mCaption.getText().toString(),
-                        (String) mDefectSpinner.getSelectedItem(),
+                        mDefectSpinner.getSelectedItemPosition(),
                         mDefectCheckbox.isChecked(),
                         Integer.valueOf((int) mDefectRatingBar.getRating()),
-                        mRemark.getText().toString()
+                        mRemark.getText().toString(),
+                        CustomDate.getCurrentDate()
                 );
 
                 dialogTapListener.onOkBtnTapped(defectDialog);

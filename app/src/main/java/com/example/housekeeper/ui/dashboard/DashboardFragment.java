@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.housekeeper.R;
 import com.example.housekeeper.activity.ChecklistActivity;
 import com.example.housekeeper.activity.DefectActivity;
-import com.example.housekeeper.activity.TaskListActivity;
 
 public class DashboardFragment extends Fragment {
 
@@ -29,7 +28,7 @@ public class DashboardFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         mRooms = root.findViewById(R.id.rooms_card);
-        mTasks = root.findViewById(R.id.task_card);
+//        mTasks = root.findViewById(R.id.task_card);
         mHotels = root.findViewById(R.id.hotels_card);
         mChecklists = root.findViewById(R.id.checklist_card);
         mDefects = root.findViewById(R.id.defects_card);
@@ -43,13 +42,13 @@ public class DashboardFragment extends Fragment {
 //        });
 
 
-        mTasks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), TaskListActivity.class);
-                startActivity(intent);
-            }
-        });
+//        mTasks.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), TaskListActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         mChecklists.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,17 +17,20 @@ public class ModelTasks {
     private String date;
     @SerializedName("priorityRating")
     private Integer priorityRating;
+    @SerializedName("roomId")
+    private Integer roomId;
 
     public ModelTasks() {
     }
 
-    public ModelTasks(Integer id, String title, String status, String room, String date, Integer priorityRating) {
+    public ModelTasks(Integer id, String title, String status, String room, String date, Integer priorityRating, Integer roomId) {
         this.id = id;
         this.title = title;
         this.status = status;
         this.room = room;
         this.date = date;
         this.priorityRating = priorityRating;
+        this.roomId = roomId;
     }
 
     public Integer getId() {
@@ -76,6 +79,14 @@ public class ModelTasks {
 
     public void setPriorityRating(Integer priorityRating) {
         this.priorityRating = priorityRating;
+    }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
     }
 
     @NonNull

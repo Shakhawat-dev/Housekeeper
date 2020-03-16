@@ -40,7 +40,8 @@ public class TaskListActivity extends AppCompatActivity {
                     "Status",
                     "Room",
                     "Date",
-                    3
+                    3,
+                    1
             );
 
             tasksList.add(modelTasks);

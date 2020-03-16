@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="88dp"
     android:layout_marginStart="4dp"
     android:layout_marginTop="4dp"
     android:layout_marginEnd="4dp"
     android:layout_marginBottom="4dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
     <LinearLayout
@@ -16,53 +18,60 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/task_status_image"
             android:layout_width="@dimen/task_item_icon_size"
             android:layout_height="@dimen/task_item_icon_size"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/shape_round_green"
+            android:elevation="8dp"
+            android:padding="16sp"
             android:layout_gravity="center"
-            android:src="@drawable/living_room"
-            android:tint="@color/colorPrimary" />
+            android:src="@drawable/complete_icon"
+            android:tint="@color/colorWhite" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
+            android:layout_marginRight="0dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_marginBottom="4dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/title_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Task Title"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/medium_size"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/medium_size" />
 
                 <TextView
                     android:id="@+id/status_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:background="@drawable/text_back_green"
-                    android:gravity="center"
-                    android:padding="@dimen/padding_margin_5dp"
+                    android:layout_margin="4dp"
                     android:paddingStart="8dp"
+                    android:elevation="4dp"
                     android:paddingEnd="8dp"
+                    android:gravity="center_vertical"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
                     android:text="Completed"
                     android:textAllCaps="true"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/micro_size" />
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -75,14 +84,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Room No: "
+                        android:drawableLeft="@drawable/ic_hotel_black_24dp"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        android:text="Room: "
                         android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/medium_size" />
+                        android:textSize="@dimen/small_size" />
 
                     <TextView
                         android:id="@+id/room_no_tv"
@@ -90,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:text=" 224A "
                         android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/medium_size" />
+                        android:textSize="@dimen/small_size" />
 
                 </LinearLayout>
 
@@ -99,9 +112,10 @@
                     style="@android:style/Widget.Material.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="false"
-                    android:isIndicator="false"
                     android:rating="4"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="4dp"
+                    android:elevation="4dp"
                     tools:targetApi="lollipop" />
 
             </LinearLayout>
@@ -109,25 +123,40 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Date : "
-                    android:textColor="@color/colorBlack" />
+                    android:drawableLeft="@drawable/ic_date_range_black_24dp"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/date_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="11/26/20019 "
-                    android:textColor="@color/colorBlack" />
+                    android:text="11/26/2019 "
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
 
         </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="@dimen/dm_30dp"
+            android:layout_height="@dimen/dm_30dp"
+            android:layout_gravity="center_vertical"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_chevron_right_black_24dp"
+            tools:ignore="VectorDrawableCompat" />
 
     </LinearLayout>
 
