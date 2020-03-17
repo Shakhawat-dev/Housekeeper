@@ -47,8 +47,8 @@
                 android:gravity="center"
                 app:ccp_arrowColor="@color/colorBlack"
                 app:ccp_contentColor="@color/colorBlack"
-                app:ccp_defaultPhoneCode="966"
                 app:ccp_showNameCode="false"
+                app:ccp_defaultPhoneCode="880"
                 app:ccp_showFlag="false" />
 
             <View

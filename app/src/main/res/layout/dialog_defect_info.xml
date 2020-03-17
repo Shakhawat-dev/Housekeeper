@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Defects"
+            android:text="@string/defects"
             android:textSize="18dp"
             android:textStyle="bold" />
 
@@ -34,9 +34,9 @@
             android:layout_gravity="center_horizontal"
             android:entries="@array/departments"
             android:gravity="center_horizontal"
-            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
             android:paddingTop="8dp"
-            android:paddingRight="8dp"
+            android:paddingEnd="8dp"
             android:paddingBottom="8dp"
             android:tooltipText="Select Department" />
 
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Notify" />
+                android:text="@string/notify" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Set Priority" />
+                    android:text="@string/set_priority" />
 
                 <RatingBar
                     android:id="@+id/priority_rating_bar"
@@ -79,7 +79,7 @@
                     android:hapticFeedbackEnabled="true"
                     android:isIndicator="false"
                     android:numStars="5"
-                    android:rating="2"
+                    android:rating="1"
                     android:stepSize="1" />
             </LinearLayout>
 
@@ -94,7 +94,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:background="@drawable/edit_text_green_outline_all_radius"
-            android:hint="Caption"
+            android:hint="@string/caption"
             android:padding="8dp" />
 
         <EditText
@@ -107,7 +107,7 @@
             android:layout_marginBottom="4dp"
             android:background="@drawable/edit_text_green_outline_all_radius"
             android:gravity="start|top"
-            android:hint="Remark"
+            android:hint="@string/remark"
             android:minLines="4"
             android:padding="8dp" />
 

@@ -7,13 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.housekeeper.R;
 
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private EditText editTextUsername, editTextPassword;
     private Button mVerifyBtn;
     private SharedPreferences loginPrefs;

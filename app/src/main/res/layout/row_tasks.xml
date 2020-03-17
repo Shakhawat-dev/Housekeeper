@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="88dp"
+    android:layout_height="wrap_content"
     android:layout_marginStart="4dp"
     android:layout_marginTop="4dp"
     android:layout_marginEnd="4dp"
@@ -21,8 +21,8 @@
             android:id="@+id/task_status_image"
             android:layout_width="@dimen/task_item_icon_size"
             android:layout_height="@dimen/task_item_icon_size"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/shape_round_green"
             android:elevation="8dp"
             android:padding="16sp"
@@ -32,12 +32,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
+            android:layout_marginRight="0dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -90,11 +91,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_hotel_black_24dp"
+                        android:drawableStart="@drawable/ic_hotel_black_24dp"
                         android:drawablePadding="8dp"
                         android:gravity="center_vertical"
-                        android:text="Room: "
+                        android:drawableLeft="@drawable/ic_hotel_black_24dp"
                         android:textColor="@color/colorBlack"
+                        android:text="@string/room"
                         android:textSize="@dimen/small_size" />
 
                     <TextView
@@ -129,11 +131,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date : "
+                    android:drawableStart="@drawable/ic_date_range_black_24dp"
                     android:drawableLeft="@drawable/ic_date_range_black_24dp"
                     android:drawablePadding="8dp"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorBlack"
+                    android:text="@string/date"
                     android:textSize="14sp" />
 
                 <TextView
@@ -146,19 +149,17 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
-
 
         <ImageView
             android:layout_width="@dimen/dm_30dp"
-            android:layout_height="@dimen/dm_30dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:tint="@color/colorPrimary"
+            android:background="@color/colorPrimary"
+            android:tint="@color/colorWhite"
             app:srcCompat="@drawable/ic_chevron_right_black_24dp"
             tools:ignore="VectorDrawableCompat" />
 
     </LinearLayout>
-
 
 </androidx.cardview.widget.CardView>

@@ -50,7 +50,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="48dp"
             android:background="@drawable/btn_outline_white"
-            android:text="Verify"
+            android:text="@string/verify"
             android:textColor="@color/colorWhite" />
 
     </LinearLayout>

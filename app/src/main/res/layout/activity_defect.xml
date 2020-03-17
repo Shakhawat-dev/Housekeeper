@@ -468,7 +468,7 @@
                             android:layout_height="32dp"
                             android:layout_gravity="end"
                             android:background="@drawable/btn_back_green_rectangle_bottom_radius"
-                            android:drawableRight="@drawable/ic_send_white_24dp"
+                            android:drawableEnd="@drawable/ic_send_white_24dp"
                             android:padding="8dp"
                             android:text="Send"
                             android:textColor="@color/colorWhite" />

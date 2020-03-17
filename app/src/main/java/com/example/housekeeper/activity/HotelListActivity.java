@@ -12,7 +12,7 @@ import com.example.housekeeper.adapter.AdapterHotels;
 import com.example.housekeeper.utils.Data;
 import com.example.housekeeper.utils.ExistApplication;
 
-public class HotelListActivity extends AppCompatActivity {
+public class HotelListActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;

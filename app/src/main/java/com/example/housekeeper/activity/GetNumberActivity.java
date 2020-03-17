@@ -4,16 +4,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.housekeeper.R;
 import com.example.housekeeper.api.RetrofitClient;
+import com.example.housekeeper.custom.LocaleManager;
+import com.example.housekeeper.custom.MultiLang;
 import com.example.housekeeper.model.ModelHotels;
 import com.example.housekeeper.model.ModelLogin;
 import com.example.housekeeper.model.ModelPhoneLanguage;
@@ -33,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetNumberActivity extends AppCompatActivity {
+public class GetNumberActivity extends BaseActivity {
 
     private CountryCodePicker ccp;
     private TextView mTitle;
@@ -74,9 +79,10 @@ public class GetNumberActivity extends AppCompatActivity {
         String countryCode = ccp.getSelectedCountryCode().trim();
         String phoneNo = edPhone.getText().toString().trim();
         fullPhoneNo = countryCode + phoneNo;
-        language = "en";
+        language = SharedPrefManager.getInstance(this).getPhoneAndLanguage().getLanguage();
         Data.hotelsList = new ArrayList<>();
 
+        Log.d(Data.TAG, "signIn: " + countryCode + "" + fullPhoneNo);
         Call<ResponseBody> call = RetrofitClient
                 .getInstance()
                 .getApi()
@@ -153,6 +159,7 @@ public class GetNumberActivity extends AppCompatActivity {
                         } else {
                             String message = jsonObject.getString("message");
                             Toast.makeText(GetNumberActivity.this, message, Toast.LENGTH_LONG).show();
+                            Log.d(Data.TAG, "signIn: " + message + "" + fullPhoneNo);
                         }
 
                     } catch (JSONException e) {
@@ -166,5 +173,26 @@ public class GetNumberActivity extends AppCompatActivity {
                 Toast.makeText(GetNumberActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.change_lang, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.action_arabic) {
+            new MultiLang(GetNumberActivity.this, LocaleManager.ARABIC);
+            return true;
+        } else if (item.getItemId() == R.id.action_english) {
+            new MultiLang(GetNumberActivity.this, LocaleManager.ENGLISH);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+
     }
 }

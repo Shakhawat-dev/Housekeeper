@@ -3,7 +3,6 @@ package com.example.housekeeper.activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -13,7 +12,7 @@ import com.example.housekeeper.R;
 import com.example.housekeeper.utils.ExistApplication;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends BaseActivity {
 
     private SharedPreferences prefs;
     private static final String LOGIN_KEY = "loginKey";

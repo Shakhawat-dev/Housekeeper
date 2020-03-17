@@ -5,12 +5,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.housekeeper.R;
 
-public class DefectActivity extends AppCompatActivity {
+public class DefectActivity extends BaseActivity {
 
     private TextView bathroomTV, tvTV, lockTV, heatingTV, lightTV, otherTV;
     private CardView bathroomCard, tvCard, lockCard, heatingCard, lightCard, otherCard;

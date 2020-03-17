@@ -24,5 +24,13 @@
     <string name="enter_your_message_here">Enter Your message here...</string>
     <string name="remark">Remark</string>
     <string name="update">Update</string>
+    <string name="select_checklist_type">Select Checklist Type:</string>
+    <string name="check_the_item_if_have_defects">Check the item if have defects</string>
+    <string name="hotels">Hotels</string>
+    <string name="verify">Verify</string>
+    <string name="defects">Defects</string>
+    <string name="set_priority">Set Priority</string>
+    <string name="notify">Notify</string>
+    <string name="caption">Caption</string>
 
 </resources>

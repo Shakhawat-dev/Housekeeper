@@ -2,7 +2,6 @@ package com.example.housekeeper.activity;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,7 +12,7 @@ import com.example.housekeeper.model.ModelTasks;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskListActivity extends AppCompatActivity {
+public class TaskListActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;

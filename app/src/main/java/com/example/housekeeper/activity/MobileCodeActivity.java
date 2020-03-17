@@ -6,12 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.chaos.view.PinView;
 import com.example.housekeeper.R;
 
-public class MobileCodeActivity extends AppCompatActivity {
+public class MobileCodeActivity extends BaseActivity {
 
     private String mToken, mVerificationCode, mOrganizationId, mUserId, getmOrganizationCaption, mPhoneNo;
     private Boolean mIsError;

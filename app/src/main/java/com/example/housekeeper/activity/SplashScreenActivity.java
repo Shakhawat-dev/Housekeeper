@@ -8,14 +8,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.housekeeper.R;
 import com.example.housekeeper.sharedPrefManager.SharedPrefManager;
 import com.example.housekeeper.utils.Data;
 import com.example.housekeeper.utils.Loading;
 
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends BaseActivity {
 
     private ImageView imageViewLoading;
     private String language;

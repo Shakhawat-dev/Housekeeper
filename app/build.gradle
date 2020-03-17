@@ -49,10 +49,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
 
-//    Country Code Picker
+    // Country Code Picker
     implementation 'com.hbb20:ccp:2.3.4'
-//    pin view for code
+    // pin view for code
     implementation 'com.chaos.view:pinview:1.4.3'
+    implementation 'com.akexorcist:localization:1.2.4'
+    implementation 'org.jetbrains:annotations:15.0'
 
 
 }

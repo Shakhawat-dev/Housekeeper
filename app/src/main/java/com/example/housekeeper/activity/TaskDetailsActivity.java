@@ -12,8 +12,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.housekeeper.R;
 import com.example.housekeeper.api.RetrofitClient;
 import com.example.housekeeper.model.ProgressStatusList;
@@ -34,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TaskDetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class TaskDetailsActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     //    private String[] categories = {"Void", "InProgress", "Completed"};
     private String spinnerSelected;
     private String remarkTxt;
